@@ -9,5 +9,5 @@ export interface IClub{
     name: string,
     description: string,
     isActive: boolean,
-    created_at: Date,
+    created_at: string,
 }
