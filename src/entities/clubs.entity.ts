@@ -1,17 +1,19 @@
 import {
   OneToOne,
+  OneToMany,
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { SessionsEntity } from "./sessions.entity";
 import { UsersEntity } from "./users.entity";
 
 @Entity("clubs")
 export class ClubsEntity {
   @PrimaryGeneratedColumn()
-  readonly Club_id: string;
+  readonly club_id: string;
 
   @OneToOne(() => UsersEntity, (UsersEntity) => UsersEntity.id)
   adm_id: string;
@@ -28,9 +30,14 @@ export class ClubsEntity {
   @CreateDateColumn()
   created_At: Date;
 
+  @OneToMany(
+    () => SessionsEntity,
+    (SessionsEntity) => SessionsEntity.session_id
+  )
+  user_clubs: SessionsEntity;
   constructor() {
-    if (!this.Club_id) {
-      this.Club_id = uuid();
+    if (!this.club_id) {
+      this.club_id = uuid();
     }
   }
 }
