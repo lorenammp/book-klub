@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { CategoriesEntity } from "./categories.entity";
 
@@ -15,7 +15,10 @@ export class BooksEntity {
 
   @ManyToOne(
     () => CategoriesEntity,
-    (CategoriesEntity) => CategoriesEntity.books
+    (CategoriesEntity) => CategoriesEntity.books,
+    {
+      eager: true,
+    }
   )
   category: CategoriesEntity;
 
