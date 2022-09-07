@@ -14,7 +14,7 @@ export class BooksEntity {
   author: string;
 
   @ManyToOne(() => CategoriesEntity, (CategoriesEntity) => CategoriesEntity.id)
-  category_id: CategoriesEntity;
+  category: CategoriesEntity;
 
   constructor() {
     if (!this.id) {
