@@ -10,11 +10,17 @@ export class UsersEntity {
   @Column({ length: 50 })
   name: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, unique: true })
   email: string;
 
   @Column({ length: 100 })
   password: string;
+
+  @Column({ default: false })
+  isAdm: boolean;
+
+  @Column({ default: true })
+  isActive: boolean;
 
   @OneToMany(
     () => UsersClubsEntity,
