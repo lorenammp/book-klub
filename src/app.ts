@@ -5,10 +5,12 @@ import categoryRoutes from "./routes/categoriesRoutes";
 import clubRouter from "./routes/clubsRoutes";
 import userRouter from "./routes/userRoutes";
 import booksRoutes from "./routes/bookRoutes";
+import sessionRouter from "./routes/sessionRoutes";
 
 const app = express();
 app.use(express.json());
 app.use("/users", userRouter)
+app.use("/login", sessionRouter)
 app.use("/categories", categoryRoutes);
 app.use("/clubs", clubRouter);
 app.use("/books",booksRoutes)

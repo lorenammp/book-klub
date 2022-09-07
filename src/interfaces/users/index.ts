@@ -16,3 +16,9 @@ export interface IUserAdm{
     isAdm: boolean,
     isActive: boolean
 }
+
+export interface IUserLogin {
+    email: string,
+    password: string
+}
+
