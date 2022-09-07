@@ -35,6 +35,7 @@ export class ClubsEntity {
     (SessionsEntity) => SessionsEntity.session_id
   )
   user_clubs: SessionsEntity;
+  
   constructor() {
     if (!this.club_id) {
       this.club_id = uuid();
