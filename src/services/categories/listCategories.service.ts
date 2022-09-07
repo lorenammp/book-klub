@@ -1,9 +1,9 @@
 import AppDataSource from "../../data-source";
-import { UsersEntity } from "../../entities/users.entity";
+import { CategoriesEntity } from "../../entities/categories.entity";
 
-const listCategoriesService = async():Promise<UsersEntity[]> => {
+const listCategoriesService = async():Promise<CategoriesEntity[]> => {
 
-    const CategoryRepository = AppDataSource.getRepository(UsersEntity);
+    const CategoryRepository = AppDataSource.getRepository(CategoriesEntity);
     const categoryList = await CategoryRepository.find();
     
     return categoryList;
