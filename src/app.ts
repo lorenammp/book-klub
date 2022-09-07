@@ -3,13 +3,16 @@ import express, { Request, Response, NextFunction } from "express";
 import { AppError } from "./errors/appError";
 import categoryRoutes from "./routes/categoriesRoutes";
 import clubRouter from "./routes/clubsRoutes";
+import userRouter from "./routes/userRoutes";
 import booksRoutes from "./routes/bookRoutes";
 
 const app = express();
 app.use(express.json());
+app.use("/users", userRouter)
 app.use("/categories", categoryRoutes);
 app.use("/clubs", clubRouter);
 app.use("/books",booksRoutes)
+
 
 app.use(
   (error: Error, request: Request, response: Response, _: NextFunction) => {
