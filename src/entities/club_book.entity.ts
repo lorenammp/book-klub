@@ -1,4 +1,10 @@
-import { OneToOne, Entity, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  OneToOne,
+  Entity,
+  CreateDateColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
 
 import { ClubsEntity } from "./clubs.entity";
@@ -6,7 +12,7 @@ import { BooksEntity } from "./books.entity";
 
 @Entity("club_book")
 export class ClubBookEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.club_id)
@@ -17,4 +23,10 @@ export class ClubBookEntity {
 
   @CreateDateColumn()
   created_At: Date;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+  }
 }

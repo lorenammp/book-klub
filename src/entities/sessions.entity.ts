@@ -4,7 +4,7 @@ import { ClubsEntity } from "./clubs.entity";
 
 @Entity("sessions")
 export class SessionsEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   readonly session_id: string;
 
   @OneToMany(() => ClubsEntity, (ClubsEntity) => ClubsEntity.club_id)

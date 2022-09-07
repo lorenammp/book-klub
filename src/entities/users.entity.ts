@@ -4,7 +4,7 @@ import { UsersClubsEntity } from "./user_club.entity";
 
 @Entity("users")
 export class UsersEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
   @Column({ length: 50 })
@@ -21,6 +21,7 @@ export class UsersEntity {
     (UsersClubsEntity) => UsersClubsEntity.club
   )
   user_clubs: UsersClubsEntity;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();

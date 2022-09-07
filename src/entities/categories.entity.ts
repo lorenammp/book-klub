@@ -4,7 +4,7 @@ import { BooksEntity } from "./books.entity";
 
 @Entity("categories")
 export class CategoriesEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
   @Column({ length: 50 })

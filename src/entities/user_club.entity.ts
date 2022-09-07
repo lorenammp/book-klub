@@ -1,10 +1,11 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ClubsEntity } from "./clubs.entity";
 import { UsersEntity } from "./users.entity";
+import { v4 as uuid } from "uuid";
 
 @Entity("user_club")
 export class UsersClubsEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @ManyToOne(() => UsersEntity, (UsersEntity) => UsersEntity.id, {
@@ -16,4 +17,10 @@ export class UsersClubsEntity {
     eager: true,
   })
   club: ClubsEntity;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid();
+    }
+  }
 }
