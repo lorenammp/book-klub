@@ -1,9 +1,11 @@
 import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import { AppError } from "./errors/appError";
+import categoryRoutes from "./routes/categoriesRoutes";
 
 const app = express();
 app.use(express.json());
+app.use('/categories', categoryRoutes);
 
 app.use(
   (error: Error, request: Request, response: Response, _: NextFunction) => {
