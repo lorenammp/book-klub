@@ -15,7 +15,7 @@ export class ClubBookEntity {
   @PrimaryColumn("uuid")
   id: string;
 
-  @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.club_id)
+  @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.id)
   club: string;
 
   @ManyToOne(() => BooksEntity, (BooksEntity) => BooksEntity.id)

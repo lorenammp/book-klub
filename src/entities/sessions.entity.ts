@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
+import { Entity, Column, OneToMany, PrimaryColumn, ManyToOne } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { ClubsEntity } from "./clubs.entity";
 
@@ -7,8 +7,10 @@ export class SessionsEntity {
   @PrimaryColumn("uuid")
   readonly session_id: string;
 
-  @OneToMany(() => ClubsEntity, (ClubsEntity) => ClubsEntity.club_id)
-  club_id: ClubsEntity;
+  @ManyToOne(() => ClubsEntity, (club) => club.session, {
+    eager: true,
+  })
+  club: ClubsEntity;
 
   @Column({ type: "date" })
   date: Date;

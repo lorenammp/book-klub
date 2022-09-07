@@ -13,7 +13,7 @@ export class UsersClubsEntity {
   })
   user: ClubsEntity;
 
-  @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.club_id, {
+  @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.id, {
     eager: true,
   })
   club: ClubsEntity;

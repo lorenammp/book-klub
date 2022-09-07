@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm";
+import { Entity, Column, ManyToOne, PrimaryColumn, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { BooksEntity } from "./books.entity";
 
@@ -10,7 +10,7 @@ export class CategoriesEntity {
   @Column({ length: 50 })
   name: string;
 
-  @ManyToOne(() => BooksEntity, (BooksEntity) => BooksEntity.category)
+  @OneToMany(() => BooksEntity, (BooksEntity) => BooksEntity.category)
   books: BooksEntity;
 
   constructor() {

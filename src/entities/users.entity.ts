@@ -1,5 +1,6 @@
 import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { ClubsEntity } from "./clubs.entity";
 import { UsersClubsEntity } from "./user_club.entity";
 
 @Entity("users")
@@ -27,6 +28,9 @@ export class UsersEntity {
     (UsersClubsEntity) => UsersClubsEntity.club
   )
   user_clubs: UsersClubsEntity;
+
+  @OneToMany((type) => ClubsEntity, (clubs) => clubs.adm)
+  clubs: ClubsEntity;
 
   constructor() {
     if (!this.id) {

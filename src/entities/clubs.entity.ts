@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   PrimaryColumn,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { SessionsEntity } from "./sessions.entity";
@@ -13,10 +14,12 @@ import { UsersEntity } from "./users.entity";
 @Entity("clubs")
 export class ClubsEntity {
   @PrimaryColumn("uuid")
-  readonly club_id: string;
+  readonly id: string;
 
-  @OneToOne(() => UsersEntity, (UsersEntity) => UsersEntity.id)
-  adm_id: string;
+  @ManyToOne((type) => UsersEntity, (user) => user.clubs, {
+    eager: true,
+  })
+  adm: UsersEntity;
 
   @Column({ length: 50 })
   name: string;
@@ -30,15 +33,12 @@ export class ClubsEntity {
   @CreateDateColumn()
   created_At: Date;
 
-  @OneToMany(
-    () => SessionsEntity,
-    (SessionsEntity) => SessionsEntity.session_id
-  )
-  user_clubs: SessionsEntity;
+  @OneToMany(() => SessionsEntity, (SessionsEntity) => SessionsEntity.club)
+  session: SessionsEntity;
 
   constructor() {
-    if (!this.club_id) {
-      this.club_id = uuid();
+    if (!this.id) {
+      this.id = uuid();
     }
   }
 }
