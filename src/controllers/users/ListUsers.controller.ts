@@ -13,6 +13,7 @@ const ListUsersController = async (req: Request, res: Response) => {
     if (error instanceof AppError) {
       handleError(error, res);
     }
-    return res.status(500).json("Internal error");
   }
 };
+
+export default ListUsersController;
