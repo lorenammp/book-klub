@@ -2,10 +2,12 @@ import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
 import { AppError } from "./errors/appError";
 import categoryRoutes from "./routes/categoriesRoutes";
+import clubRouter from "./routes/clubsRoutes";
 
 const app = express();
 app.use(express.json());
-app.use('/categories', categoryRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/clubs", clubRouter);
 
 app.use(
   (error: Error, request: Request, response: Response, _: NextFunction) => {
