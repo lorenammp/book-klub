@@ -5,7 +5,7 @@ import { IUser, IUserRequest } from "../../interfaces/users";
 import { hash } from "bcrypt"
 import { UsersEntity } from "../../entities/users.entity";
 
-async function createUserService(userData: IUserRequest): Promise<IUser>{
+async function createUserService(userData: IUserRequest){
 
     const userRepository = AppDataSource.getRepository(UsersEntity)
 
