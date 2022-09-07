@@ -3,8 +3,8 @@ import {
   OneToMany,
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
+  PrimaryColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { SessionsEntity } from "./sessions.entity";
@@ -12,7 +12,7 @@ import { UsersEntity } from "./users.entity";
 
 @Entity("clubs")
 export class ClubsEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   readonly club_id: string;
 
   @OneToOne(() => UsersEntity, (UsersEntity) => UsersEntity.id)

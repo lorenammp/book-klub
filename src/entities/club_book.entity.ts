@@ -3,7 +3,7 @@ import {
   Entity,
   CreateDateColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
@@ -12,7 +12,7 @@ import { BooksEntity } from "./books.entity";
 
 @Entity("club_book")
 export class ClubBookEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   id: string;
 
   @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.club_id)

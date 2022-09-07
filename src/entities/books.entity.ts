@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { CategoriesEntity } from "./categories.entity";
 
 @Entity("books")
 export class BooksEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   readonly id: string;
 
   @Column({ length: 50 })
@@ -13,7 +13,10 @@ export class BooksEntity {
   @Column({ length: 50 })
   author: string;
 
-  @ManyToOne(() => CategoriesEntity, (CategoriesEntity) => CategoriesEntity.id)
+  @ManyToOne(
+    () => CategoriesEntity,
+    (CategoriesEntity) => CategoriesEntity.books
+  )
   category: CategoriesEntity;
 
   constructor() {

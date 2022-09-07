@@ -1,11 +1,11 @@
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { ClubsEntity } from "./clubs.entity";
 import { UsersEntity } from "./users.entity";
 import { v4 as uuid } from "uuid";
 
 @Entity("user_club")
 export class UsersClubsEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   id: string;
 
   @ManyToOne(() => UsersEntity, (UsersEntity) => UsersEntity.id, {
