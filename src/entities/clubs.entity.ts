@@ -27,7 +27,7 @@ export class ClubsEntity {
   @Column({ length: 300 })
   description: string;
 
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 
   @CreateDateColumn()

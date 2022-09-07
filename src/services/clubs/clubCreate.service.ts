@@ -1,29 +1,42 @@
 import AppDataSource from "../../data-source";
-import {ClubsEntity} from "../../entities/clubs.entity"
-import {IClubRequest} from "../../interfaces/clubs"
-import {AppError} from "../../errors/appError"
+import { ClubsEntity } from "../../entities/clubs.entity";
+import { IClubRequest } from "../../interfaces/clubs";
+import { AppError } from "../../errors/appError";
+import { UsersEntity } from "../../entities/users.entity";
 
+const createClubService = async ({
+  name,
+  description,
+  admId,
+}: IClubRequest) => {
+  const clubRepository = AppDataSource.getRepository(ClubsEntity);
+  const userRepository = AppDataSource.getRepository(UsersEntity);
 
-const createClubService = async ({name, description, admId}: IClubRequest) => {
-    const clubRepostory = AppDataSource.getRepository(ClubsEntity)
-    const clubAlreadyExists = await clubRepostory.findOne({
-        where: {name: name }
-    })
+  const clubAlreadyExists = await clubRepository.findOne({
+    where: { name: name },
+  });
 
-    if(clubAlreadyExists) {
-        throw new AppError(400, "Club already exists!")
-    }
+  if (clubAlreadyExists) {
+    throw new AppError(400, "Club already exists!");
+  }
 
-    const newClub = clubRepostory.create({
-        name, 
-        description, 
-        adm_id : admId
-    })
+  const clubAdm = await userRepository.findOne({
+    where: { id: admId },
+  });
 
-    await clubRepostory.save(newClub)
+  if (!clubAdm) {
+    throw new AppError(404, "Invalid user id");
+  }
 
-    return newClub
-}
+  const newClub = clubRepository.create({
+    name,
+    description,
+    adm: clubAdm,
+  });
 
-export default createClubService
+  await clubRepository.save(newClub);
 
+  return newClub;
+};
+
+export default createClubService;
