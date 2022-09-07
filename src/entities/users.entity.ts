@@ -18,7 +18,7 @@ export class UsersEntity {
 
   @OneToMany(
     () => UsersClubsEntity,
-    (UsersClubsEntity) => UsersClubsEntity.club_id
+    (UsersClubsEntity) => UsersClubsEntity.club
   )
   user_clubs: UsersClubsEntity;
   constructor() {
