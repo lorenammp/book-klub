@@ -11,7 +11,7 @@ import OwnerMiddleware from "../middlewares/ownerUser.middleware";
 const userRouter = Router();
 
 userRouter.post("", createUserController);
-userRouter.get("", AuthMiddlewares, admMiddlleware, ListUsersController);
+userRouter.get("", ListUsersController);
 userRouter.get("/:id", AuthMiddlewares, ListAnUserController);
 userRouter.patch("/:id", AuthMiddlewares, OwnerMiddleware, UpdateAnUserController);
 userRouter.delete(
