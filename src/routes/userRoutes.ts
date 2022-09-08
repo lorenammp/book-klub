@@ -10,7 +10,7 @@ import AuthMiddlewares from "../middlewares/auth.middleware";
 const userRouter = Router();
 
 userRouter.post("", createUserController);
-userRouter.get("", AuthMiddlewares, admMiddlleware, ListUsersController);
+userRouter.get("", ListUsersController);
 userRouter.get("/:id", AuthMiddlewares, ListAnUserController);
 userRouter.patch("/:id", AuthMiddlewares, UpdateAnUserController);
 userRouter.delete(
