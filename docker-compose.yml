@@ -7,10 +7,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DB_HOST=db
-      - DB_PASSWORD=1234
-      - DB=book_klub_db
-      - DB_USER=admin
+      - DATABASE_URL=postgres://admin:1234@db:5432/book_klub_db
       - SECRET_KEY=123456
     depends_on:
       db:
