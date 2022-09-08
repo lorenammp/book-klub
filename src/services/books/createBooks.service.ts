@@ -27,7 +27,7 @@ const  createBooksService = async(data: IbookRequest)=>{
         throw new AppError(400, "Category not found")
     };
 
-    const bookExists = await booksRepository.findBy({
+    const bookExists = await booksRepository.findOneBy({
         name: data.name,
         author: data.author,
         category: category
