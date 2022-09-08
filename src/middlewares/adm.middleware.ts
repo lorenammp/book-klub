@@ -1,16 +1,18 @@
-import { Request, Response, NextFunction } from 'express'
-import { AppError } from '../errors/appError';
+import { Request, Response, NextFunction } from "express";
 
-const admMiddlleware = async (req: Request, res: Response, next: NextFunction) => {
-    
+const admMiddlleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const adm = req.body.isAdm;
-  
+
   if (adm === false) {
-    throw new AppError(403,"Not authorization")
-  } 
+    return res.status(401).send({
+      message: "Permission denied",
+    });
+  }
   next();
-
-
 };
 
 export default admMiddlleware;

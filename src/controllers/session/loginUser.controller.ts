@@ -6,16 +6,22 @@ const loginUserController = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    const token = await loginUserService({ email, password});
+    if (!email || !password) {
+      return res.status(401).json({
+        status: "error",
+        statusCode: 401,
+        message: "Missing e-mail or password",
+      });
+    }
 
-    return res.status(200).json({token});
-    
+    const token = await loginUserService({ email, password });
+
+    return res.status(200).json(token);
   } catch (error) {
     if (error instanceof AppError) {
       handleError(error, res);
     }
-    return res.status(500).json("Internal error");
   }
 };
 
-export default loginUserController
+export default loginUserController;
