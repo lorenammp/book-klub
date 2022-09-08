@@ -1,28 +1,30 @@
 import AppDataSource from "../../data-source";
-import { CategoriesEntity  } from "../../entities/categories.entity";
-import { ICategoryRequest} from "../../interfaces/categories";
+import { CategoriesEntity } from "../../entities/categories.entity";
+import { ICategoryRequest } from "../../interfaces/categories";
 import { AppError } from "../../errors/appError";
 
+const createCategorieService = async ({
+  name,
+}: ICategoryRequest): Promise<CategoriesEntity> => {
+  const categorieRepository = AppDataSource.getRepository(CategoriesEntity);
 
-const createCategorieService = async ({name}:ICategoryRequest):Promise<CategoriesEntity> =>{
- 
-    const categorieRepository = AppDataSource.getRepository(CategoriesEntity);
+  const category = await categorieRepository.find();
 
-    const category = await categorieRepository.find();
-    
-    const categorieAlreadyExists =  category.find(categories => categories.name === name );
+  const categorieAlreadyExists = category.find(
+    (categories) => categories.name === name
+  );
 
-    if (categorieAlreadyExists) {
-       throw new AppError(400,'Category already exists')
-    }
+  if (categorieAlreadyExists) {
+    throw new AppError(400, "Category already exists");
+  }
 
-    const categories = categorieRepository.create({
-    name
-    });
+  const categories = categorieRepository.create({
+    name,
+  });
 
-    await categorieRepository.save(categories);
+  await categorieRepository.save(categories);
 
-    return categories;
+  return categories;
 };
 
 export default createCategorieService;
