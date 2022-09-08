@@ -34,6 +34,8 @@ const createClubService = async ({
     adm: clubAdm,
   });
 
+  console.log(newClub);
+
   await clubRepository.save(newClub);
 
   return newClub;
