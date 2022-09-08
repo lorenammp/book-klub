@@ -2,7 +2,7 @@ import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/appError";
 import { IUser, IUserRequest } from "../../interfaces/users";
 
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { UsersEntity } from "../../entities/users.entity";
 
 async function createUserService(userData: IUserRequest) {
