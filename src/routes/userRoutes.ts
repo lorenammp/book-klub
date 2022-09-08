@@ -6,13 +6,14 @@ import ListUsersController from "../controllers/users/ListUsers.controller";
 import UpdateAnUserController from "../controllers/users/UpdateAnUser.controller";
 import admMiddlleware from "../middlewares/adm.middleware";
 import AuthMiddlewares from "../middlewares/auth.middleware";
+import OwnerMiddleware from "../middlewares/ownerUser.middleware";
 
 const userRouter = Router();
 
 userRouter.post("", createUserController);
 userRouter.get("", AuthMiddlewares, admMiddlleware, ListUsersController);
 userRouter.get("/:id", AuthMiddlewares, ListAnUserController);
-userRouter.patch("/:id", AuthMiddlewares, UpdateAnUserController);
+userRouter.patch("/:id", AuthMiddlewares, OwnerMiddleware, UpdateAnUserController);
 userRouter.delete(
   "/:id",
   AuthMiddlewares,
