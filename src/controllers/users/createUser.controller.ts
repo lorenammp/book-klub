@@ -8,10 +8,8 @@ const createUserController = async (req: Request, res: Response) => {
     const user = await createUserService({ name, email, password });
 
     return res.status(201).json(user);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  } catch (error: any) {
+    handleError(error, res);
   }
 };
 

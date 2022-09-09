@@ -8,12 +8,14 @@ import UpdateAnUserController from "../controllers/users/UpdateAnUser.controller
 import admMiddlleware from "../middlewares/adm.middleware";
 import AuthMiddlewares from "../middlewares/auth.middleware";
 import OwnerMiddleware from "../middlewares/ownerUser.middleware";
+import listUserClubsController from "../controllers/users/listUserClubs.controller";
 
 const userRouter = Router();
 
 userRouter.post("", createUserController);
 userRouter.post("/login", loginUserController);
 userRouter.get("", ListUsersController);
+userRouter.get("/:id/clubs", AuthMiddlewares, listUserClubsController);
 userRouter.get("/:id", AuthMiddlewares, ListAnUserController);
 userRouter.patch(
   "/:id",
@@ -24,7 +26,7 @@ userRouter.patch(
 userRouter.delete(
   "/:id",
   AuthMiddlewares,
-  admMiddlleware,
+  OwnerMiddleware,
   deleteUserController
 );
 
