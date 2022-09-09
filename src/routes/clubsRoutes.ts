@@ -1,4 +1,5 @@
 import { Router } from "express";
+import ClubEntryController from "../controllers/clubs/clubEntry.controller";
 import clubListByIdController from "../controllers/clubs/clubListById.controller.";
 
 import clubsListController from "../controllers/clubs/clubsList.controller";
@@ -19,6 +20,7 @@ clubRouter.delete(
   deleteClubController
 );
 clubRouter.get("/:id", clubListByIdController);
-clubRouter.patch("/:id",updateClubController)
+clubRouter.patch("/:id", updateClubController);
+clubRouter.post("/:id/entry", AuthMiddlewares, ClubEntryController);
 
 export default clubRouter;
