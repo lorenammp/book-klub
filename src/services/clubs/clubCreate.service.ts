@@ -3,6 +3,7 @@ import { ClubsEntity } from "../../entities/clubs.entity";
 import { IClubRequest } from "../../interfaces/clubs";
 import { AppError } from "../../errors/appError";
 import { UsersEntity } from "../../entities/users.entity";
+import { UsersClubsEntity } from "../../entities/user_club.entity";
 
 const createClubService = async ({
   name,
@@ -34,10 +35,15 @@ const createClubService = async ({
     adm: clubAdm,
   });
 
-  console.log(newClub);
-
   await clubRepository.save(newClub);
 
+  const usersClubsRepository = AppDataSource.getRepository(UsersClubsEntity);
+  const newClubUser = usersClubsRepository.create({
+    user: clubAdm,
+    club: newClub,
+  });
+
+  await usersClubsRepository.save(newClubUser);
   return newClub;
 };
 

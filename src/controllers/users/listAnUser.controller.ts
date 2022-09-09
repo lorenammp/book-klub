@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppError, handleError } from "../../errors/appError";
-import ListAnUsersService from "../../services/users/ListAnUser.service";
+import ListAnUsersService from "../../services/users/listAnUser.service";
 
 const ListAnUserController = async (req: Request, res: Response) => {
   try {
