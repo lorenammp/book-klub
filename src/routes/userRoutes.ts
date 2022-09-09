@@ -8,6 +8,7 @@ import UpdateAnUserController from "../controllers/users/UpdateAnUser.controller
 import admMiddlleware from "../middlewares/adm.middleware";
 import AuthMiddlewares from "../middlewares/auth.middleware";
 import OwnerMiddleware from "../middlewares/ownerUser.middleware";
+import listUserClubsController from "../controllers/users/listUserClubs.controller";
 
 const userRouter = Router();
 
@@ -27,5 +28,6 @@ userRouter.delete(
   admMiddlleware,
   deleteUserController
 );
+userRouter.get("/:id/clubs", AuthMiddlewares, listUserClubsController)
 
 export default userRouter;
