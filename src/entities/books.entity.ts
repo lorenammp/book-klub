@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn, ManyToOne } from "typeorm";
+import { Entity, Column, PrimaryColumn, ManyToOne, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { CategoriesEntity } from "./categories.entity";
+import { ClubBookEntity } from "./club_book.entity";
 
 @Entity("books")
 export class BooksEntity {
@@ -21,6 +22,9 @@ export class BooksEntity {
     }
   )
   category: CategoriesEntity;
+
+  @OneToMany(() => ClubBookEntity, (club) => club.id)
+  club: ClubBookEntity;
 
   constructor() {
     if (!this.id) {
