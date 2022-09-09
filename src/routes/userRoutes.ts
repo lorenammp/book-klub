@@ -15,6 +15,7 @@ const userRouter = Router();
 userRouter.post("", createUserController);
 userRouter.post("/login", loginUserController);
 userRouter.get("", ListUsersController);
+userRouter.get("/:id/clubs", AuthMiddlewares, listUserClubsController);
 userRouter.get("/:id", AuthMiddlewares, ListAnUserController);
 userRouter.patch(
   "/:id",
@@ -28,6 +29,5 @@ userRouter.delete(
   admMiddlleware,
   deleteUserController
 );
-userRouter.get("/:id/clubs", AuthMiddlewares, listUserClubsController)
 
 export default userRouter;
