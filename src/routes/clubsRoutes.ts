@@ -8,7 +8,7 @@ import deleteClubController from "../controllers/clubs/deleteClub.controller";
 import updateClubController from "../controllers/clubs/updateClub.controller";
 import admMiddlleware from "../middlewares/adm.middleware";
 import AuthMiddlewares from "../middlewares/auth.middleware";
-import clubsListMeetingsService from "../services/clubs/clubsListMeetings.service";
+import clubsListMeetingsController from "../controllers/clubs/clubsListMeetings.controller";
 
 const clubRouter = Router();
 
@@ -20,7 +20,7 @@ clubRouter.delete(
   admMiddlleware,
   deleteClubController
 );
-clubRouter.get("/:id/meetings", clubsListMeetingsService)
+clubRouter.get("/:id/meetings", clubsListMeetingsController)
 clubRouter.get("/:id", clubListByIdController);
 clubRouter.patch("/:id", updateClubController);
 clubRouter.post("/:id/entry", AuthMiddlewares, ClubEntryController);

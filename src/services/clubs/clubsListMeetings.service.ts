@@ -14,11 +14,11 @@ const clubsListMeetingsService = async (clubId: string) => {
     if (!clubMeeting){
         throw new AppError(404,"Club not Found!")
     }
-
-    const meetings = meetingsRepository.find({
+    
+    const meetings = await meetingsRepository.find({
         where : {club : clubMeeting}
     }) 
-
+   
     if(!meetings){
         throw new AppError(404, "There are no Meetings in this club!")
     }
