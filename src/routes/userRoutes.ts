@@ -26,7 +26,7 @@ userRouter.patch(
 userRouter.delete(
   "/:id",
   AuthMiddlewares,
-  admMiddlleware,
+  OwnerMiddleware,
   deleteUserController
 );
 
