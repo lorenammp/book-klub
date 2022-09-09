@@ -10,11 +10,9 @@ const deleteBooksController= async (req: Request, res: Response)=>{
         return res.status(204).json({
             message: "Book deleted sucess"
         })
-    }catch(error){
-        if (error instanceof AppError) {
-            handleError(error, res);
-        }
-    }
+    } catch (error: any) {
+        handleError(error, res);
+      }
 }
 
 export default deleteBooksController;

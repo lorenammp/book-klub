@@ -9,10 +9,8 @@ const ListUsersController = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "No user registered" });
     }
     return res.status(200).json(Users);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 

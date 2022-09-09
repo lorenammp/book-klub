@@ -10,11 +10,9 @@ const clubLisByIdController = async (req: Request, res: Response) => {
         const club = await clubListByIdService(id)
 
         return res.status(200).json(club);
-    } catch (error) {
-        if (error instanceof AppError){
-            handleError(error, res)
-        }
-    }
+    }  catch (error: any) {
+        handleError(error, res);
+      }
 }
 
 export default clubLisByIdController;

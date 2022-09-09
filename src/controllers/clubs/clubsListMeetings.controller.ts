@@ -8,11 +8,9 @@ const clubsListMeetingsController = async (req: Request, res: Response) => {
         const meetinngs = clubsListMeetingsService(clubId);
 
         return res.status(200).json(meetinngs);
-    } catch (error) {
-        if (error instanceof AppError){
-            handleError(error, res)
-        }
-    }
+    }  catch (error: any) {
+        handleError(error, res);
+      }
 }
 
 export default clubsListMeetingsController
