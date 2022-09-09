@@ -134,29 +134,27 @@ describe("Testing the user routes", () => {
   });
 
   test("Should be able to delete an user", async () => {
-    const LoginUser = await request(app).post("/users/login").send(UserLogin);
+    const { name, ...user } = UpdatedUser;
+    const LoginUser = await request(app).post("/users/login").send(user);
+
     const Users = await request(app).get("/users");
 
     const res = await request(app)
       .delete(`/users/${Users.body[0].id}`)
-      .send(UpdatedUser)
       .set("Authorization", `Bearer ${LoginUser.body.token}`);
 
     expect(res.status).toBe(204);
   });
 
   test("Shouldn't be able to delete an user without adm ", async () => {
-    const LoginUser = await request(app)
-      .post("/users/login")
-      .send(SecondUserLogin);
+    const LoginUser = await request(app).post("/users/login").send(SecondUser);
     const Users = await request(app).get("/users");
 
     const res = await request(app)
       .delete(`/users/${Users.body[0].id}`)
-      .send(UpdatedUser)
       .set("Authorization", `Bearer ${LoginUser.body.token}`);
 
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(403);
     expect(res.body).toHaveProperty("message");
   });
 });
