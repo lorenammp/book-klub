@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppError, handleError } from "../../errors/appError";
-import UpdateAnUsersService from "../../services/users/UpdateAnUser.service";
+import UpdateAnUsersService from "../../services/users/updateAnUser.service";
 
 const UpdateAnUserController = async (req: Request, res: Response) => {
   try {

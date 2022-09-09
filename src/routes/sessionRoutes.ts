@@ -1,5 +1,5 @@
 import { Router } from "express";
-import loginUserController from "../controllers/session/loginUser.controller";
+import loginUserController from "../controllers/users/loginUser.controller";
 
 const sessionRouter = Router();
 

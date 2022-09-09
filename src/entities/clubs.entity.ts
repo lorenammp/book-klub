@@ -1,5 +1,4 @@
 import {
-  OneToOne,
   OneToMany,
   Entity,
   Column,
@@ -8,18 +7,14 @@ import {
   ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { SessionsEntity } from "./sessions.entity";
+import { MeetingsEntity } from "./meetings.entity";
 import { UsersEntity } from "./users.entity";
+import { UsersClubsEntity } from "./user_club.entity";
 
 @Entity("clubs")
 export class ClubsEntity {
   @PrimaryColumn("uuid")
   readonly id: string;
-
-  @ManyToOne((type) => UsersEntity, (user) => user.clubs, {
-    eager: true,
-  })
-  adm: UsersEntity;
 
   @Column({ length: 50 })
   name: string;
@@ -33,8 +28,16 @@ export class ClubsEntity {
   @CreateDateColumn()
   created_At: Date;
 
-  @OneToMany(() => SessionsEntity, (SessionsEntity) => SessionsEntity.club)
-  session: SessionsEntity;
+  @ManyToOne((type) => UsersEntity, (user) => user.clubs, {
+    eager: true,
+  })
+  adm: UsersEntity;
+
+  @OneToMany((type) => UsersClubsEntity, (user_clubs) => user_clubs.club)
+  user_clubs: UsersClubsEntity;
+
+  @OneToMany(() => MeetingsEntity, (meeting) => meeting.club)
+  meeting: MeetingsEntity;
 
   constructor() {
     if (!this.id) {
