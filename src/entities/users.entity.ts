@@ -27,10 +27,10 @@ export class UsersEntity {
     () => UsersClubsEntity,
     (UsersClubsEntity) => UsersClubsEntity.club
   )
-  user_clubs: UsersClubsEntity;
+  user_clubs: UsersClubsEntity[];
 
   @OneToMany((type) => ClubsEntity, (clubs) => clubs.adm)
-  clubs: ClubsEntity;
+  clubs: ClubsEntity[];
 
   constructor() {
     if (!this.id) {

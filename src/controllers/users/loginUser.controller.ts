@@ -21,6 +21,8 @@ const loginUserController = async (req: Request, res: Response) => {
     if (error instanceof AppError) {
       handleError(error, res);
     }
+
+    return error;
   }
 };
 
