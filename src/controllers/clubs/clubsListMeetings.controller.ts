@@ -4,9 +4,8 @@ import clubsListMeetingsService from "../../services/clubs/clubsListMeetings.ser
 
 const clubsListMeetingsController = async (req: Request, res: Response) => {
     try {
-        const clubId = req.params.id;
-        const meetinngs = clubsListMeetingsService(clubId);
-
+        const id = req.params.id
+        const meetinngs = await clubsListMeetingsService(id);
         return res.status(200).json(meetinngs);
     } catch (error) {
         if (error instanceof AppError){
