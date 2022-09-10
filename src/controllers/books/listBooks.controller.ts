@@ -6,10 +6,8 @@ const listBooksController = async (req: Request, res: Response) => {
   try {
     const book= await listBooksService();
     return res.status(200).json(book);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 
