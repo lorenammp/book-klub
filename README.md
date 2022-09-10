@@ -16,7 +16,7 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
   - [Instalação e uso](#instalação-e-uso)
     - [Utilizando o docker](#utilizando-o-docker)
     - [Utilizando um banco de dados local](#utilizando-um-banco-de-dados-local)
-  - [Api](#api)
+  - [Utilizando a API](#utilizando-a-api)
   - [Desenvolvedores](#desenvolvedores)
       - [**Carlos**](#carlos)
       - [**Clara**](#clara)
@@ -88,13 +88,22 @@ SECRET_KEY=
 DATABASE_URL="postgres://<username>:<password>@<host>:<port>/<database>"
 ```
 
-Em `SECRET_KEY`, insira os dados da secret key que pretende utilizar. Em `DATABASE_URL`, os dados `username`, `password` e `database` pelas informações do seu banco de dados PostgreSQL. Substitua `host` e `port` pelos valores de sua preferência.
+Em `SECRET_KEY`, insira os dados da secret key que pretende utilizar - é possível utilizar qualquer string como a secret key.
+
+Em `DATABASE_URL`, substitua os dados `username`, `password` e `database` pelas informações do seu banco de dados PostgreSQL. Substitua `host` e `port` pelos valores de sua preferência. Exemplo:
+
+```
+SECRET_KEY=123456
+DATABASE_URL="postgres://admin:1234@localhost:5432/bookklub"
+```
 
 Em seguida, altere o nome do arquivo, de `.env.example` para `.env`.
 
-## Api
+## Utilizando a API
 
-Para utilizar e API `Book Klub`, acesse a [documentação do projeto](https://insomnia-doc-nine.vercel.app/)
+Para utilizar a API `Book Klub`, acesse a [documentação do projeto](https://insomnia-doc-nine.vercel.app/).
+
+Na documentação você poderá encontrar todos os endpoints da aplicação e mais sobre como utilizar a API em seus próprios projetos e aplicações.
 
 ## Desenvolvedores
 
