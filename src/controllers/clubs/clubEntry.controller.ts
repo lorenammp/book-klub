@@ -12,10 +12,8 @@ const ClubEntryController = async (req: Request, res: Response) => {
     return res.status(201).send({
       message: userEnteredClub,
     });
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 

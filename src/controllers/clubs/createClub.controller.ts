@@ -10,10 +10,8 @@ const createClubController = async (req: Request, res: Response) => {
     const response = await createClubService({ name, description, admId });
 
     return res.status(201).json(response);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 

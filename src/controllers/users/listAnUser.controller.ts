@@ -8,10 +8,8 @@ const ListAnUserController = async (req: Request, res: Response) => {
     const User = await ListAnUsersService(id);
 
     return res.status(200).json(User);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  } catch (error: any) {
+    handleError(error, res);
   }
 };
 
