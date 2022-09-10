@@ -9,7 +9,6 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
 ## Índice
 
 - [Book Klub](#book-klub)
-  - [Índice](#índice)
   - [Sobre a aplicação](#sobre-a-aplicação)
     - [Features](#features)
     - [Tecnologias](#tecnologias)
@@ -91,7 +90,7 @@ SECRET_KEY=123456
 DATABASE_URL="postgres://admin:1234@localhost:5432/bookklub"
 ```
 
-Em seguida, altere o nome do arquivo, de `.env.example` para `.env`.
+Em seguida, altere o nome do arquivo de `.env.example` para `.env`.
 
 ## Utilizando a API
 
