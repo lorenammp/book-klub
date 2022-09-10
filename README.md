@@ -18,12 +18,6 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
     - [Utilizando um banco de dados local](#utilizando-um-banco-de-dados-local)
   - [Utilizando a API](#utilizando-a-api)
   - [Desenvolvedores](#desenvolvedores)
-      - [**Carlos**](#carlos)
-      - [**Clara**](#clara)
-      - [**Gabriela**](#gabriela)
-      - [**Jamilly**](#jamilly)
-      - [**Leo**](#leo)
-      - [**Lorena**](#lorena)
   - [Licença de uso](#licença-de-uso)
 
 ## Sobre a aplicação
