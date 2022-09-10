@@ -13,11 +13,9 @@ const listUserClubsController = async (req: Request, res: Response) => {
 
     return res.status(200).json(user)
 
-    } catch (error) {
-        if (error instanceof AppError) {
+    }  catch (error: any) {
         handleError(error, res);
-        }
-    } 
+      } 
 }
 
 export default listUserClubsController

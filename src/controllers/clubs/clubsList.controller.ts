@@ -7,11 +7,9 @@ const clubsListController = async (req:Request , res:Response) => {
         const clubs = await clubsListService()
 
         return res.status(200).json(clubs)
-    } catch (error) {
-        if(error instanceof AppError){
-            handleError(error, res)
-        }
-    }
+    } catch (error: any) {
+        handleError(error, res);
+      }
 }
 
 export default clubsListController;

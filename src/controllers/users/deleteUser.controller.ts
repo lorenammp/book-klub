@@ -9,10 +9,8 @@ const deleteUserController = async (req: Request, res: Response) => {
 
     return res.status(204).send(result);
 
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  } catch (error: any) {
+    handleError(error, res);
   }
 };
 

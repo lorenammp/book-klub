@@ -17,12 +17,8 @@ const loginUserController = async (req: Request, res: Response) => {
     const token = await loginUserService({ email, password });
 
     return res.status(200).json(token);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
-
-    return error;
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 

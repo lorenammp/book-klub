@@ -13,9 +13,9 @@ const clubBookEntryController = async(req: Request, res: Response)=>{
         res.status(200).json({
             message: clubBook
         })
-    } catch (error: any) {
-        handleError(error, res)
-    }
+    }  catch (error: any) {
+        handleError(error, res);
+      }
 }
 
 export default clubBookEntryController;

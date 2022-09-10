@@ -11,10 +11,8 @@ const updateClubController = async (req: Request, res: Response) => {
     
     return res.status(200).send(club);
     
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 

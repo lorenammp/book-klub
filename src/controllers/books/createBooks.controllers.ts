@@ -9,12 +9,8 @@ const createBooksController = async (req: Request, res: Response) => {
     const book = await createBooksService(data);
 
     return res.status(201).json(book);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
-
-    return error;
+  }  catch (error: any) {
+    handleError(error, res);
   }
 };
 
