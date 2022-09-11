@@ -6,16 +6,14 @@ import { AppError } from "../../errors/appError";
 
 const ClubEntryService = async (userId: string, clubId: string) => {
   const userRepository = AppDataSource.getRepository(UsersEntity);
-  const users = await userRepository.find();
-  const clubUser = users.find((user) => user.id === userId);
+  const user = await userRepository.findOneBy({ id: userId });
 
-  if (!clubUser) {
+  if (!user) {
     throw new AppError(404, "User not found");
   }
 
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
-  const clubs = await clubRepository.find();
-  const enteredClub = clubs.find((club) => club.id === clubId);
+  const enteredClub = await clubRepository.findOneBy({ id: clubId });
 
   if (!enteredClub) {
     throw new AppError(404, "Club not found");
@@ -32,7 +30,7 @@ const ClubEntryService = async (userId: string, clubId: string) => {
     throw new AppError(400, "User already belongs to this club");
   }
   const newClubUser = usersClubsRepository.create({
-    user: clubUser,
+    user: user,
     club: enteredClub,
   });
 
