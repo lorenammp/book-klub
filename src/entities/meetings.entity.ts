@@ -18,6 +18,9 @@ export class MeetingsEntity {
   @Column("time")
   hour: string;
 
+  @Column({ length: 300 })
+  description: string;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();
