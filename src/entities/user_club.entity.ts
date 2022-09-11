@@ -13,9 +13,7 @@ export class UsersClubsEntity {
   })
   user: UsersEntity;
 
-  @ManyToOne(() => ClubsEntity, (clubs) => clubs.user_clubs, {
-    eager: true,
-  })
+  @ManyToOne(() => ClubsEntity, (clubs) => clubs.user_clubs)
   club: ClubsEntity;
 
   constructor() {

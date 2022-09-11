@@ -12,14 +12,14 @@ const listUserClubsService = async (id: string) => {
   if (!findUser) {
     throw new AppError(404, "not found");
   }
-  
+
   const userClub = await ClubRepository.createQueryBuilder()
-        .select("c")
-        .from(UsersClubsEntity, "usc")
-        .innerJoin(ClubsEntity, "c", 'c."id" = usc."clubId"')
-        .where('usc."userId" = :id', {id: id})
-        .groupBy("c.id")
-        .getRawMany()
+    .select("club")
+    .from(UsersClubsEntity, "usc")
+    .innerJoin(ClubsEntity, "club", 'club."id" = usc."clubId"')
+    .where('usc."userId" = :id', { id: id })
+    .groupBy("club.id")
+    .getRawMany();
 
   return userClub;
 };
