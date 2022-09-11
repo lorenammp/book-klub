@@ -6,32 +6,28 @@ import { UsersEntity } from "../../entities/users.entity";
 import { UsersClubsEntity } from "../../entities/user_club.entity";
 import { AppError } from "../../errors/appError";
 
-const booksUserService = async(id: string) =>{
-    const bookRepository = AppDataSource.getRepository(BooksEntity);
-    const userRepository = AppDataSource.getRepository(UsersEntity);
-    const ClubRepository = AppDataSource.getRepository(ClubsEntity);
-    const clubBookRepository = AppDataSource.getRepository(ClubBookEntity);
-    const userClubRepository = AppDataSource.getRepository(UsersClubsEntity);
+const booksUserService = async (id: string) => {
+  const bookRepository = AppDataSource.getRepository(BooksEntity);
+  const userRepository = AppDataSource.getRepository(UsersEntity);
 
-    const userAlready = await userRepository.findOneBy({id: id});
+  const userAlready = await userRepository.findOneBy({ id: id });
 
-    if(!userAlready){
-        throw new AppError(400, "User not found");
-    }
+  if (!userAlready) {
+    throw new AppError(400, "User not found");
+  }
 
-    const books = await bookRepository.createQueryBuilder()
-        .select("b")
-        .from(UsersClubsEntity, "usc")
-        .innerJoin(ClubsEntity, "c", 'c."id" = usc."clubId"')
-        .innerJoin(ClubBookEntity, "cb", 'cb."clubId" = usc."clubId"')
-        .innerJoin(BooksEntity, "b", 'b.id = cb."bookId"')
-        .where('usc."userId" = :id', {id: id})
-        .groupBy("b.id")
-        .getRawMany()
+  const books = await bookRepository
+    .createQueryBuilder()
+    .select("b")
+    .from(UsersClubsEntity, "usc")
+    .innerJoin(ClubsEntity, "c", 'c."id" = usc."clubId"')
+    .innerJoin(ClubBookEntity, "cb", 'cb."clubId" = usc."clubId"')
+    .innerJoin(BooksEntity, "b", 'b.id = cb."bookId"')
+    .where('usc."userId" = :id', { id: id })
+    .groupBy("b.id")
+    .getRawMany();
 
-        
-    return books
-
-}
+  return books;
+};
 
 export default booksUserService;
