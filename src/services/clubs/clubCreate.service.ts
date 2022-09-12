@@ -13,6 +13,10 @@ const createClubService = async ({
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
   const userRepository = AppDataSource.getRepository(UsersEntity);
 
+  if(!name || !description || !admId){
+    throw new AppError(400, "All parameters required");
+  }
+
   const clubAlreadyExists = await clubRepository.findOne({
     where: { name: name },
   });
