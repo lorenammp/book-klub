@@ -28,7 +28,6 @@ const clubsListMeetingsService = async (clubId: string) => {
     throw new AppError(404, "There are no Meetings in this club!");
   }
 
-  console.log(allMeetings);
   return meetings;
 };
 
