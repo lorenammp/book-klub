@@ -20,6 +20,6 @@ export const handleError = (error: AppError, res: Response) => {
 
   return res.status(500).json({
     status: "error",
-    message: "Internal server error",
+    message:(error as any).message,
   });
 };
