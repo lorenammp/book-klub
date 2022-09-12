@@ -21,11 +21,10 @@ const createBooksService = async (data: IbookRequest) => {
     throw new AppError(400, "CategoryId is required!");
   }
 
-  const category = await categoryRepository.findOneBy({ id: data.categoryId });
-
   if (!category) {
     throw new AppError(400, "Category not found");
   }
+
 
   const bookExists = await booksRepository.findOneBy({
     name: data.name,
@@ -36,6 +35,7 @@ const createBooksService = async (data: IbookRequest) => {
   if (bookExists) {
     throw new AppError(400, "Book already exists.");
   }
+
 
   const newBook = booksRepository.create({
     id: uuidv4(),
