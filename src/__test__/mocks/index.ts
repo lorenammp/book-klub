@@ -1,4 +1,4 @@
-import { IUserLogin } from "../../interfaces/users";
+import { IUserLogin, IUserRequest } from "../../interfaces/users";
 
 export const fakeId = "9be1d4fe-df85-4fde-bf89-19ef2d37bbb5";
 
@@ -65,4 +65,15 @@ export const mockedSecondBookRegister = {
 export const mockedWrongBookRegister = {
   name: "To Kill a Mockingbird",
   author: "Harper Lee",
+};
+
+export const mockedWrongUserLogin: IUserLogin = {
+  email: "emailteste@mail.com",
+  password: "1234567",
+};
+
+export const mockedUpdatedUser: IUserRequest = {
+  name: "Leoo",
+  email: "email@email.com",
+  password: "1234567",
 };
