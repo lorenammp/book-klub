@@ -7,6 +7,7 @@ import {
   ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
+import { ClubBookEntity } from "./club_book.entity";
 import { MeetingsEntity } from "./meetings.entity";
 import { UsersEntity } from "./users.entity";
 import { UsersClubsEntity } from "./user_club.entity";
@@ -35,6 +36,11 @@ export class ClubsEntity {
 
   @OneToMany((type) => UsersClubsEntity, (user_clubs) => user_clubs.club)
   user_clubs: UsersClubsEntity;
+
+  @OneToMany((type) => ClubBookEntity, (book) => book.club, {
+    eager: true,
+  })
+  book: ClubBookEntity[];
 
   @OneToMany(() => MeetingsEntity, (meeting) => meeting.club)
   meeting: MeetingsEntity;
