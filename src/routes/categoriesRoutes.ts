@@ -7,6 +7,6 @@ import authMiddlewares from '../middlewares/auth.middleware'
 const categoryRoutes = Router()
 
 categoryRoutes.post('', authMiddlewares, createCategoriesController);
-categoryRoutes.get('', listCategoriesController)
+categoryRoutes.get('', authMiddlewares, listCategoriesController)
 
 export default categoryRoutes 
