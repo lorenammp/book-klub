@@ -67,6 +67,23 @@ export const mockedWrongBookRegister = {
   author: "Harper Lee",
 };
 
+export const mockedMeetingRegister = {
+  description: "Meeting",
+  date: "16/08/2022",
+  hour: "09:00",
+};
+
+export const mockedSecondMeetingRegister = {
+  description: "Second Meeting",
+  date: "18/08/2022",
+  hour: "14:00",
+};
+
+export const mockedWrongMeetingRegister = {
+  description: "Meeting",
+  date: "16/08/2022",
+};
+
 export const mockedWrongUserLogin: IUserLogin = {
   email: "emailteste@mail.com",
   password: "1234567",
