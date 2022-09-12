@@ -50,6 +50,18 @@ export const mockedWrongCategoryRegister = {
   category: "Drama",
 };
 
+export const mockedBook = {
+  bookId: "",
+};
+
+export const mockedSecondBook = {
+  bookId: "",
+};
+
+export const mockedWrongBook = {
+  id: "",
+};
+
 export const mockedBookRegister = {
   name: "Stranger in a Strange Land",
   author: "Robert A. Heinlein",
