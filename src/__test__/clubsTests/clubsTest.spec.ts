@@ -4,16 +4,20 @@ import app from "../../app";
 import AppDataSource from "../../data-source";
 import {
   fakeId,
+  mockedBook,
   mockedBookRegister,
   mockedCategoryRegister,
   mockedClubRegister,
   mockedMeetingRegister,
+  mockedSecondBook,
+  mockedSecondBookRegister,
   mockedSecondCategoryRegister,
   mockedSecondClubRegister,
   mockedSecondUserLogin,
   mockedSecondUserRegister,
   mockedUserLogin,
   mockedUserRegister,
+  mockedWrongBook,
   mockedWrongBookRegister,
   mockedWrongClubRegister,
   mockedWrongMeetingRegister,
@@ -160,11 +164,19 @@ describe("Testing clubs routes", () => {
       .send(mockedCategoryRegister);
 
     mockedBookRegister.categoryId = categoryId.body.id;
+    mockedSecondBookRegister.categoryId = categoryId.body.id;
+
+    const bookId = await request(app)
+      .post(`/books`)
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+      .send(mockedBookRegister);
+
+    mockedBook.bookId = bookId.body.id;
 
     const response = await request(app)
       .post(`/clubs/${clubId}/book`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedBookRegister);
+      .send(mockedBook);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(200);
@@ -178,26 +190,10 @@ describe("Testing clubs routes", () => {
     const response = await request(app)
       .post(`/clubs/${clubId}/book`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedWrongBookRegister);
+      .send(mockedWrongBook);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
-  });
-
-  test("POST /clubs/:id/book - Should not be able to add a book to a club with a wrong category id", async () => {
-    const userLoginResponse = await request(app)
-      .post("/users/login")
-      .send(mockedUserLogin);
-
-    mockedBookRegister.categoryId = fakeId;
-
-    const response = await request(app)
-      .post(`/clubs/${clubId}/book`)
-      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedBookRegister);
-
-    expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(404);
   });
 
   test("POST /clubs/:id/book - Should not be able to add a book to a club with a wrong club id", async () => {
@@ -205,17 +201,17 @@ describe("Testing clubs routes", () => {
       .post("/users/login")
       .send(mockedUserLogin);
 
-    const categoryId = await request(app)
-      .post("/categories")
+    const bookId = await request(app)
+      .post(`/books`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedSecondCategoryRegister);
+      .send(mockedSecondBookRegister);
 
-    mockedBookRegister.categoryId = categoryId.body.id;
+    mockedSecondBook.bookId = bookId.body.id;
 
     const response = await request(app)
       .post(`/clubs/${fakeId}/book`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedBookRegister);
+      .send(mockedSecondBook);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(404);
@@ -229,7 +225,7 @@ describe("Testing clubs routes", () => {
     const response = await request(app)
       .post(`/clubs/${clubId}/book`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedBookRegister);
+      .send(mockedBook);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
