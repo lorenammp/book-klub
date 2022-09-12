@@ -146,7 +146,7 @@ describe("Testing the user routes", () => {
     expect(res.status).toBe(204);
   });
 
-  test("Shouldn't be able to delete an user without adm ", async () => {
+  test("Shouldn't be able to delete an user without adm", async () => {
     const LoginUser = await request(app).post("/users/login").send(SecondUser);
     const Users = await request(app).get("/users");
 
