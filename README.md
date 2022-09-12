@@ -9,7 +9,6 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
 ## Índice
 
 - [Book Klub](#book-klub)
-  - [Índice](#índice)
   - [Sobre a aplicação](#sobre-a-aplicação)
     - [Features](#features)
     - [Tecnologias](#tecnologias)
@@ -18,12 +17,6 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
     - [Utilizando um banco de dados local](#utilizando-um-banco-de-dados-local)
   - [Utilizando a API](#utilizando-a-api)
   - [Desenvolvedores](#desenvolvedores)
-      - [**Carlos**](#carlos)
-      - [**Clara**](#clara)
-      - [**Gabriela**](#gabriela)
-      - [**Jamilly**](#jamilly)
-      - [**Leo**](#leo)
-      - [**Lorena**](#lorena)
   - [Licença de uso](#licença-de-uso)
 
 ## Sobre a aplicação
@@ -97,7 +90,7 @@ SECRET_KEY=123456
 DATABASE_URL="postgres://admin:1234@localhost:5432/bookklub"
 ```
 
-Em seguida, altere o nome do arquivo, de `.env.example` para `.env`.
+Em seguida, altere o nome do arquivo de `.env.example` para `.env`.
 
 ## Utilizando a API
 
