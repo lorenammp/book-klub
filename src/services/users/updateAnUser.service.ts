@@ -4,7 +4,7 @@ import { AppError } from "../../errors/appError";
 import { IUserRequest } from "../../interfaces/users";
 import { hash } from "bcryptjs";
 
-const UpdateAnUsersService = async (userId: string, dataUser: IUserRequest) => {
+const UpdateAnUsersService = async (userId: string, dataUser: any) => {
   const UserRepository = AppDataSource.getRepository(UsersEntity);
   const UserFind = await UserRepository.findOneBy({ id: userId });
   const Users = await UserRepository.find();
@@ -15,6 +15,10 @@ const UpdateAnUsersService = async (userId: string, dataUser: IUserRequest) => {
 
   if (!UserFind) {
     throw new AppError(404, "User not found");
+  }
+
+  if (dataUser.isActive || dataUser.isActive === false) {
+    throw new AppError(403, "Can't update isActive");
   }
 
   if (EmailAlreadyExists) {
