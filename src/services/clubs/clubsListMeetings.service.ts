@@ -12,19 +12,23 @@ const clubsListMeetingsService = async (clubId: string) => {
       id: clubId,
     },
   });
+
+  
   if (!clubMeeting) {
     throw new AppError(404, "Club not Found!");
   }
   const allMeetings = await meetingsRepository.find();
   const meetings: MeetingsEntity[] = []
   allMeetings.forEach(meeting => {
-    if (meeting.club === clubMeeting) {
+    if (meeting.club.id === clubMeeting.id) {
       meetings.push(meeting);
     }
   })
   if (!meetings) {
     throw new AppError(404, "There are no Meetings in this club!");
   }
+
+  console.log(allMeetings);
   return meetings;
 };
 
