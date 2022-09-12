@@ -10,7 +10,7 @@ const UpdateAnUserController = async (req: Request, res: Response) => {
     const UpdatedUser = await UpdateAnUsersService(id, data);
 
     return res.status(200).json(UpdatedUser);
-  }  catch (error: any) {
+  } catch (error: any) {
     handleError(error, res);
   }
 };
