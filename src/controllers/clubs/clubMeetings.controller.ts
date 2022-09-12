@@ -10,10 +10,8 @@ const ClubMeetingController = async (req: Request, res: Response) => {
       const meeting = await clubMeetingsService(clubId, date, hour, description);
 
       return res.status(201).send(meeting);
-  } catch (error) {
-    if (error instanceof AppError) {
-      handleError(error, res);
-    }
+  } catch (error: any) {
+    handleError(error, res);
   }
 };
 export default ClubMeetingController;

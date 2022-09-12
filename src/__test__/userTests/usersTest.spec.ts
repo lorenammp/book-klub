@@ -3,41 +3,14 @@ import { DataSource } from "typeorm";
 import AppDataSource from "../../data-source";
 import request from "supertest";
 
-import { IUserLogin, IUserRequest } from "../../interfaces/users";
-
-const newUser = {
-  name: "Leo",
-  email: "emailteste@mail.com",
-  password: "123456",
-  isAdm: true,
-};
-
-const SecondUser: IUserRequest = {
-  name: "Usuario 2",
-  email: "user2@mail.com",
-  password: "123456",
-};
-
-const UserLogin: IUserLogin = {
-  email: "emailteste@mail.com",
-  password: "123456",
-};
-
-const SecondUserLogin: IUserLogin = {
-  email: "user2@mail.com",
-  password: "123456",
-};
-
-const WrongUserLogin: IUserLogin = {
-  email: "emailteste@mail.com",
-  password: "1234567",
-};
-
-const UpdatedUser: IUserRequest = {
-  name: "Leoo",
-  email: "email@email.com",
-  password: "1234567",
-};
+import {
+  mockedUserRegister,
+  mockedUserLogin,
+  mockedWrongUserLogin,
+  mockedSecondUserRegister,
+  mockedSecondUserLogin,
+  mockedUpdatedUser,
+} from "../mocks/index";
 
 describe("Testing the user routes", () => {
   let connection: DataSource;
@@ -53,7 +26,7 @@ describe("Testing the user routes", () => {
   });
 
   test("Should be able to create a new user POST/users", async () => {
-    const res = await request(app).post("/users").send(newUser);
+    const res = await request(app).post("/users").send(mockedUserRegister);
 
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty("id");
@@ -64,28 +37,32 @@ describe("Testing the user routes", () => {
   });
 
   test("Should be able to Log In POST/users/login", async () => {
-    const res = await request(app).post("/users/login").send(UserLogin);
+    const res = await request(app).post("/users/login").send(mockedUserLogin);
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("token");
   });
 
   test("Shouldn't be able to login POST/users/login", async () => {
-    const res = await request(app).post("/users/login").send(WrongUserLogin);
+    const res = await request(app)
+      .post("/users/login")
+      .send(mockedWrongUserLogin);
 
     expect(res.status).toBe(403);
     expect(res.body).toHaveProperty("status");
     expect(res.body).toHaveProperty("message");
   });
 
-  test("Should be able to list all users", async () => {
+  test("Should be able to list all users GET/users", async () => {
     const res = await request(app).get("/users");
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("map");
   });
 
-  test("Should be able to list an users GET/users", async () => {
-    const LoginUser = await request(app).post("/users/login").send(UserLogin);
+  test("Should be able to list an users GET/users/:id", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
     const Users = await request(app).get("/users");
 
     const res = await request(app)
@@ -101,12 +78,14 @@ describe("Testing the user routes", () => {
   });
 
   test("Should be able to update an user PATCH/users/:id", async () => {
-    const LoginUser = await request(app).post("/users/login").send(UserLogin);
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
     const Users = await request(app).get("/users");
 
     const res = await request(app)
       .patch(`/users/${Users.body[0].id}`)
-      .send(UpdatedUser)
+      .send(mockedUpdatedUser)
       .set("Authorization", `Bearer ${LoginUser.body.token}`);
 
     expect(res.status).toBe(200);
@@ -118,23 +97,25 @@ describe("Testing the user routes", () => {
   });
 
   test("Shouldn't be able to update an user if not a owner PATCH/users/:id", async () => {
-    const LoginUser = await request(app).post("/users/login").send(UserLogin);
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
 
-    await request(app).post("/users").send(SecondUser);
+    await request(app).post("/users").send(mockedSecondUserRegister);
 
     const Users = await request(app).get("/users");
 
     const res = await request(app)
       .patch(`/users/${Users.body[1].id}`)
-      .send(UpdatedUser)
+      .send(mockedUpdatedUser)
       .set("Authorization", `Bearer ${LoginUser.body.token}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message");
   });
 
-  test("Should be able to delete an user", async () => {
-    const { name, ...user } = UpdatedUser;
+  test("Should be able to delete an user DELETE/users/:id", async () => {
+    const { name, ...user } = mockedUpdatedUser;
     const LoginUser = await request(app).post("/users/login").send(user);
 
     const Users = await request(app).get("/users");
@@ -146,8 +127,10 @@ describe("Testing the user routes", () => {
     expect(res.status).toBe(204);
   });
 
-  test("Shouldn't be able to delete an user without adm", async () => {
-    const LoginUser = await request(app).post("/users/login").send(SecondUser);
+  test("Shouldn't be able to delete an user without wrong id DELETE/users/:id", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedSecondUserRegister);
     const Users = await request(app).get("/users");
 
     const res = await request(app)
