@@ -15,13 +15,15 @@ export class ClubBookEntity {
   @PrimaryColumn("uuid")
   id: string;
 
-  @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.id)
-  club: string;
+  @ManyToOne(() => ClubsEntity, (ClubsEntity) => ClubsEntity.id, {
+    eager:true
+  })
+  club: ClubsEntity;
 
   @ManyToOne(() => BooksEntity, (BooksEntity) => BooksEntity.id, {
     eager: true,
   })
-  book: string;
+  book: BooksEntity;
 
   @CreateDateColumn()
   created_At: Date;

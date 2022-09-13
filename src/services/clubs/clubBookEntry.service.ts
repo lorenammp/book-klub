@@ -16,8 +16,12 @@ const clubBookEntryService = async (clubId: string, bookId: string) => {
     throw new AppError(401, "Book Id required!")
   }
 
-  const bookAlready = await bookRepository.findBy({ id: bookId });
-  const clubAlready = await clubRepository.findBy({ id: clubId });
+  const clubAlready = await clubRepository.findOne({
+    where: {id: clubId}
+  });
+  const bookAlready = await bookRepository.findOne({
+    where: {id: bookId}
+  })
 
   if (!bookAlready) {
     throw new AppError(400, "Book not found");
@@ -26,14 +30,22 @@ const clubBookEntryService = async (clubId: string, bookId: string) => {
     throw new AppError(400, "Club not found");
   }
 
+  const clubBook = await clubBookRepository.find();
+
+  const clubBookAlready = clubBook.find(el=> el.book.id === bookId && el.club.id === clubId);
+
+  if(clubBookAlready){
+    throw new AppError(400, "Book already registered in the club")
+  }
+
   const newClubBook = clubBookRepository.create({
-    book: bookId,
-    club: clubId,
+    book: bookAlready,
+    club: clubAlready,
   });
 
-  await clubBookRepository.save(newClubBook);
+  const res = await clubBookRepository.save(newClubBook);
 
-  return "Book added successfully";
+  return res;
 };
 
 export default clubBookEntryService;

@@ -21,32 +21,31 @@ const createBooksService = async (data: IbookRequest) => {
     throw new AppError(400, "CategoryId is required!");
   }
 
+  const categories = await categoryRepository.find()
+  const category = categories.find(el=>el.id === data.categoryId)
+  
   if (!category) {
     throw new AppError(400, "Category not found");
   }
 
+  const books = await booksRepository.find()
+  const bookExists = books.some(el=> el.name === data.name && el.author == data.author);
+  console.log(books)
 
-  const bookExists = await booksRepository.findOneBy({
-    name: data.name,
-    author: data.author,
-    category: category,
-  });
 
   if (bookExists) {
     throw new AppError(400, "Book already exists.");
   }
 
-
   const newBook = booksRepository.create({
-    id: uuidv4(),
     name: data.name,
     author: data.author,
-    category: category,
+    category: category
   });
 
-  await booksRepository.save(newBook);
+  const res = await booksRepository.save(newBook);
 
-  return newBook;
+  return res;
 };
 
 export default createBooksService;
