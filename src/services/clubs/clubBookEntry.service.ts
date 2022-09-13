@@ -9,11 +9,11 @@ const clubBookEntryService = async (clubId: string, bookId: string) => {
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
   const clubBookRepository = AppDataSource.getRepository(ClubBookEntity);
 
-  if(!clubId){
-    throw new AppError(401, "Club Id required!")
+  if (!clubId) {
+    throw new AppError(401, "Club Id required!");
   }
-  if(!bookId){
-    throw new AppError(401, "Book Id required!")
+  if (!bookId) {
+    throw new AppError(401, "Book Id required!");
   }
 
   const bookAlready = await bookRepository.findBy({ id: bookId });
