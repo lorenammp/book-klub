@@ -50,6 +50,18 @@ export const mockedWrongCategoryRegister = {
   category: "Drama",
 };
 
+export const mockedBook = {
+  bookId: "",
+};
+
+export const mockedSecondBook = {
+  bookId: "",
+};
+
+export const mockedWrongBook = {
+  id: "",
+};
+
 export const mockedBookRegister = {
   name: "Stranger in a Strange Land",
   author: "Robert A. Heinlein",
@@ -65,6 +77,23 @@ export const mockedSecondBookRegister = {
 export const mockedWrongBookRegister = {
   name: "To Kill a Mockingbird",
   author: "Harper Lee",
+};
+
+export const mockedMeetingRegister = {
+  description: "Meeting",
+  date: "16/08/2022",
+  hour: "09:00",
+};
+
+export const mockedSecondMeetingRegister = {
+  description: "Second Meeting",
+  date: "18/08/2022",
+  hour: "14:00",
+};
+
+export const mockedWrongMeetingRegister = {
+  description: "Meeting",
+  date: "16/08/2022",
 };
 
 export const mockedWrongUserLogin: IUserLogin = {

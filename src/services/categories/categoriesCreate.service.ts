@@ -10,6 +10,10 @@ const createCategorieService = async ({
 
   const category = await categorieRepository.find();
 
+  if(!name){
+    throw new AppError(400, "The category name is required!")
+  }
+
   const categorieAlreadyExists = category.find(
     (categories) => categories.name === name
   );
