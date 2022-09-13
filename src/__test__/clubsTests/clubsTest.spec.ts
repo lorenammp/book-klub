@@ -369,15 +369,10 @@ describe("Testing clubs routes", () => {
     expect(response.status).toBe(404);
   });
 
-  
   test("PATCH/clubs/:id, shouldn't be able to update, without a token", async () => {
-    const responseToken = await request(app)
-      .post("/users/login")
-      .send(mockedUserLogin);
-
     const clubs = await request(app).get("/clubs");
 
-    clubId = clubs.body.id
+    clubId = clubs.body.id;
 
     const res = await request(app)
       .patch(`/clubs/${clubId}`)
@@ -385,81 +380,77 @@ describe("Testing clubs routes", () => {
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message");
-});
+  });
 
-
-test("PATCH/clubs/:id, Shouldn't be able to update, with a invalid id", async () => {
+  test("PATCH/clubs/:id, Shouldn't be able to update, with a invalid id", async () => {
     const responseToken = await request(app)
-        .post("/users/login")
-        .send(mockedUserLogin)
-     
-        const club = await request(app).get(`/clubs/${fakeId}`);
-        
-        const response = await request(app)
-        .patch(`/clubs/${fakeId}`)
-        .send(mockedClubRegister)
-        .set("Authorization", `Bearer ${responseToken.body.token}`)
-        
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const club = await request(app).get(`/clubs/${fakeId}`);
+
+    const response = await request(app)
+      .patch(`/clubs/${fakeId}`)
+      .send(mockedClubRegister)
+      .set("Authorization", `Bearer ${responseToken.body.token}`);
+
     expect(club.status).toBe(404);
     expect(response.body).toHaveProperty("message");
-});
+  });
 
-
-test("PATCH/clubs/:id, Should be possible to update club", async () => {
+  test("PATCH/clubs/:id, Should be possible to update club", async () => {
     const responseToken = await request(app)
-    .post("/users/login")
-    .send(mockedUserLogin)
+      .post("/users/login")
+      .send(mockedUserLogin);
     await request(app).post("/clubs").send(mockedClubRegister);
-    const response = await request(app).get("/clubs")
-    
+    const response = await request(app).get("/clubs");
+
     const responsePatch = await request(app)
-    .patch(`/clubs/${response.body[0].id}`)
-    .send(mockedClubRegister)
-    .set("Authorization", `Bearer ${responseToken.body.token}`);
-    
+      .patch(`/clubs/${response.body[0].id}`)
+      .send(mockedClubRegister)
+      .set("Authorization", `Bearer ${responseToken.body.token}`);
+
     expect(responsePatch.status).toBe(200);
     expect(responsePatch.body).toHaveProperty("id");
     expect(responsePatch.body).toHaveProperty("name");
     expect(responsePatch.body).toHaveProperty("description");
-});
-  
-test("DELETE/clubs/:id, Shouldn't be able to delete an club, without token.", async () => {
-  const LoginUser = await request(app)
-    .post("/users/login")
-    .send(mockedSecondUserRegister);
+  });
 
-  const clubs = await request(app).get("/clubs/");
+  test("DELETE/clubs/:id, Shouldn't be able to delete an club, without token.", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedSecondUserRegister);
 
-  const res = await request(app).delete(`/clubs/${clubs.body[0].id}`);
+    const clubs = await request(app).get("/clubs/");
 
-  expect(res.status).toBe(401);
-  expect(res.body).toHaveProperty("message");
-});
-  
-  
-test("DELETE/clubs/:id, should not be possible to delete a club with the wrong id.", async () => {
-  const LoginUser = await request(app)
-    .post("/users/login")
-    .send(mockedUserLogin);
+    const res = await request(app).delete(`/clubs/${clubs.body[0].id}`);
 
-  const res = await request(app)
-    .delete(`/clubs/${fakeId}`)
-    .set("Authorization", `Bearer ${LoginUser.body.token}`);
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty("message");
+  });
 
-  expect(res.status).toBe(404);
-  expect(res.body).toHaveProperty("message");
-});
-  
-test("DELETE/clubs/:id, Should be able to delete an club.", async () => {
-  const LoginUser = await request(app)
-    .post("/users/login")
-    .send(mockedUserLogin);
-  const clubs = await request(app)
-    .get("/clubs");
-  const res = await request(app)
-    .delete(`/clubs/${clubs.body[0].id}`)
-    .set("Authorization", `Bearer ${LoginUser.body.token}`);
+  test("DELETE/clubs/:id, should not be possible to delete a club with the wrong id.", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
 
-  expect(res.status).toBe(204);
-});
+    const res = await request(app)
+      .delete(`/clubs/${fakeId}`)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("DELETE/clubs/:id, Should be able to delete an club.", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+    const clubs = await request(app).get("/clubs");
+    const res = await request(app)
+      .delete(`/clubs/${clubs.body[0].id}`)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    expect(res.status).toBe(204);
+  });
 });
