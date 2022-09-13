@@ -12,6 +12,7 @@ import admMiddlleware from "../middlewares/adm.middleware";
 import AuthMiddlewares from "../middlewares/auth.middleware";
 import clubsListMeetingsController from "../controllers/clubs/clubsListMeetings.controller";
 import ClubMeetingController from "../controllers/clubs/clubMeetings.controller";
+import exitClubController from "../controllers/clubs/exitClub.controller";
 
 const clubRouter = Router();
 
@@ -29,5 +30,6 @@ clubRouter.delete(
   AuthMiddlewares,
   deleteClubController
 );
+clubRouter.delete("/:id/exit", AuthMiddlewares, exitClubController)
 
 export default clubRouter;
