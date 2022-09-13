@@ -33,6 +33,7 @@ const createBooksService = async (data: IbookRequest) => {
     (el) => el.name === data.name && el.author == data.author
   );
 
+
   if (bookExists) {
     throw new AppError(400, "Book already exists.");
   }
