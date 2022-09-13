@@ -13,6 +13,8 @@ const AuthMiddlewares = async (
 
     if (!token) {
       return res.status(401).send({
+        staus: "error",
+        statusCode: 401,
         message: "Missing authorization headers.",
       });
     }
@@ -25,6 +27,8 @@ const AuthMiddlewares = async (
       (error: any, decoded: any) => {
         if (error) {
           return res.status(401).send({
+            staus: "error",
+            statusCode: 401,
             message: "Invalid token.",
           });
         }
