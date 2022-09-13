@@ -178,4 +178,15 @@ describe("Testing books routes", ()=>{
         expect(response.status).toBe(401)
     })
 
+    test("DELETE /books/:id - Shold not be able a book that doesn't exist", async ()=>{
+        const userLoginResponse = await request(app)
+        .post("/users/login")
+        .send(mockedUserLogin);
+
+        const response = await request(app)
+        .delete(`/books/66047662-dfa2-4f45-a557-88bc2b9ed294`)
+        .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
+        
+        expect(response.status).toBe(400)
+    })
 })
