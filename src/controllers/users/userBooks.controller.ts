@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { handleError } from "../../errors/appError";
 import booksUserService from "../../services/users/userBooks.service";
+import { instanceToPlain } from "class-transformer";
+
 
 const booksUserController = async (req: Request, res: Response)=>{
     try{
