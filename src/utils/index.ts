@@ -2,7 +2,7 @@ import { IEmailRequest } from "../interfaces/email";
 import { createTransport } from "nodemailer";
 import "dotenv/config";
 
-const sendEmail = async ({ subject, text, to }: IEmailRequest): Promise => {
+const sendEmail = async ({ subject, text, to }: IEmailRequest) => {
   const transporter = createTransport({
     host: "smtp-mail.outlook.com",
     port: 587,
