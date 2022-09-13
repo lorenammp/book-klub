@@ -21,15 +21,18 @@ const createBooksService = async (data: IbookRequest) => {
     throw new AppError(400, "CategoryId is required!");
   }
 
-  const categories = await categoryRepository.find()
-  const category = categories.find(el=>el.id === data.categoryId)
-  
+  const categories = await categoryRepository.find();
+  const category = categories.find((el) => el.id === data.categoryId);
+
   if (!category) {
     throw new AppError(400, "Category not found");
   }
 
-  const books = await booksRepository.find()
-  const bookExists = books.some(el=> el.name === data.name && el.author == data.author);
+  const books = await booksRepository.find();
+  const bookExists = books.some(
+    (el) => el.name === data.name && el.author == data.author
+  );
+
 
   if (bookExists) {
     throw new AppError(400, "Book already exists.");
@@ -38,7 +41,7 @@ const createBooksService = async (data: IbookRequest) => {
   const newBook = booksRepository.create({
     name: data.name,
     author: data.author,
-    category: category
+    category: category,
   });
 
   const res = await booksRepository.save(newBook);

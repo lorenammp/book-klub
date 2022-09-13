@@ -12,6 +12,7 @@ import admMiddlleware from "../middlewares/adm.middleware";
 import AuthMiddlewares from "../middlewares/auth.middleware";
 import clubsListMeetingsController from "../controllers/clubs/clubsListMeetings.controller";
 import ClubMeetingController from "../controllers/clubs/clubMeetings.controller";
+import exitClubController from "../controllers/clubs/exitClub.controller";
 
 const clubRouter = Router();
 
@@ -23,12 +24,12 @@ clubRouter.get("", clubsListController);
 clubRouter.get("/:id", clubListByIdController);
 clubRouter.get("/:id/meetings", clubsListMeetingsController);
 clubRouter.get("/:id/users", AuthMiddlewares, ClubUserListController);
-clubRouter.patch("/:id", updateClubController);
+clubRouter.patch("/:id",AuthMiddlewares ,updateClubController);
 clubRouter.delete(
   "/:id",
   AuthMiddlewares,
-  admMiddlleware,
   deleteClubController
 );
+clubRouter.delete("/:id/exit", AuthMiddlewares, exitClubController)
 
 export default clubRouter;

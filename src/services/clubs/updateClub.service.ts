@@ -7,16 +7,18 @@ const UpdateClubService = async (id:string, name:string, description:string ,
 ): Promise<ClubsEntity> => {
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
 
+ 
+  const club = await clubRepository.findOneBy({ id: id});
+
+  if (!club) {
+    throw new AppError(400, "Club not found");
+  }
+
   await clubRepository.update(id, {
     name,
     description
   });
     
-  const club = await clubRepository.findOneBy({ id });
-
-  if (!club) {
-    throw new AppError(400, "Club not found");
-  }
 
   return club;
 };

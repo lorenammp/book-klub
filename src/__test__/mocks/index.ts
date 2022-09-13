@@ -8,6 +8,7 @@ export const mockedUserRegister = {
   password: "123456",
 };
 
+
 export const mockedUserLogin: IUserLogin = {
   email: "user@mail.com",
   password: "123456",
@@ -106,3 +107,5 @@ export const mockedUpdatedUser: IUserRequest = {
   email: "email@email.com",
   password: "1234567",
 };
+
+

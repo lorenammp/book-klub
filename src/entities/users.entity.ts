@@ -2,6 +2,7 @@ import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { ClubsEntity } from "./clubs.entity";
 import { UsersClubsEntity } from "./user_club.entity";
+import { Exclude } from "class-transformer";
 
 @Entity("users")
 export class UsersEntity {
@@ -14,7 +15,8 @@ export class UsersEntity {
   @Column({ length: 50, unique: true })
   email: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 101 })
+  @Exclude()
   password: string;
 
   @Column({ default: false })
