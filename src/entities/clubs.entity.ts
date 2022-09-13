@@ -37,9 +37,7 @@ export class ClubsEntity {
   @OneToMany((type) => UsersClubsEntity, (user_clubs) => user_clubs.club)
   user_clubs: UsersClubsEntity;
 
-  @OneToMany((type) => ClubBookEntity, (book) => book.club, {
-    eager: true,
-  })
+  @OneToMany((type) => ClubBookEntity, (book) => book.club)
   book: ClubBookEntity[];
 
   @OneToMany(() => MeetingsEntity, (meeting) => meeting.club)
