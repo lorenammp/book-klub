@@ -10,6 +10,6 @@ const booksRoutes = Router();
 
 booksRoutes.post('',AuthMiddlewares, createBooksController);
 booksRoutes.get('',listBooksController);
-booksRoutes.delete('/:id', AuthMiddlewares, admMiddlleware, deleteBooksController);
+booksRoutes.delete('/:id', AuthMiddlewares, deleteBooksController);
 
 export default booksRoutes;

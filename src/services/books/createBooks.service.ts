@@ -30,8 +30,6 @@ const createBooksService = async (data: IbookRequest) => {
 
   const books = await booksRepository.find()
   const bookExists = books.some(el=> el.name === data.name && el.author == data.author);
-  console.log(books)
-
 
   if (bookExists) {
     throw new AppError(400, "Book already exists.");
