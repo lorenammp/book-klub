@@ -14,7 +14,13 @@ const ClubUserListService = async (clubId: string) => {
 
   const clubUsers = await clubsRepository
     .createQueryBuilder()
-    .select("users")
+    .select([
+      "users.id",
+      "users.name",
+      "users.email",
+      "users.isAdm",
+      "users.isActive",
+    ])
     .from(UsersClubsEntity, "usc")
     .innerJoin(UsersEntity, "users", 'users."id" = usc."userId"')
     .where('usc."clubId" = :id', { id: clubId })

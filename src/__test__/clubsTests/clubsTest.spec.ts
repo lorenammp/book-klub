@@ -282,4 +282,90 @@ describe("Testing clubs routes", () => {
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
   });
+
+  test("GET /clubs/ - Should be able to list all clubs", async () => {
+    const response = await request(app).get(`/clubs`);
+
+    expect(response.body[0]).toHaveProperty("id");
+    expect(response.body[0]).toHaveProperty("name");
+    expect(response.body[0]).toHaveProperty("description");
+    expect(response.body[0]).toHaveProperty("isActive");
+    expect(response.body[0]).toHaveProperty("created_At");
+    expect(response.body[0].isActive).toEqual(true);
+    expect(response.status).toBe(200);
+  });
+
+  test("GET /clubs/:id - Should be able to list a single club by it's id", async () => {
+    const response = await request(app).get(`/clubs/${clubId}`);
+
+    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("description");
+    expect(response.body).toHaveProperty("isActive");
+    expect(response.body).toHaveProperty("created_At");
+    expect(response.body.isActive).toEqual(true);
+    expect(response.status).toBe(200);
+  });
+
+  test("GET /clubs/:id - Should not be able to list a single club with a wrong id", async () => {
+    const response = await request(app).get(`/clubs/${fakeId}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
+  test("GET /clubs/:id/users - Should not be able to list all club users without authentication", async () => {
+    const response = await request(app).get(`/clubs/${clubId}/users`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
+
+  test("GET /clubs/:id/users - Should be able to list all club users", async () => {
+    const userLoginResponse = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const response = await request(app)
+      .get(`/clubs/${clubId}/users`)
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+    expect(response.body[0]).toHaveProperty("users_id");
+    expect(response.body[0]).toHaveProperty("users_name");
+    expect(response.body[0]).toHaveProperty("users_email");
+    expect(response.body[0]).toHaveProperty("users_isActive");
+    expect(response.body[0]).toHaveProperty("users_isAdm");
+    expect(response.body[0]).not.toHaveProperty("users_password");
+    expect(response.status).toBe(200);
+  });
+
+  test("GET /clubs/:id/users - Should not be able to list all club users with a wrong id", async () => {
+    const userLoginResponse = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const response = await request(app)
+      .get(`/clubs/${fakeId}/users`)
+      .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
+
+  test("GET /clubs/:id/meetings - Should be able to list all club meetings", async () => {
+    const response = await request(app).get(`/clubs/${clubId}/meetings`);
+
+    expect(response.body[0]).toHaveProperty("id");
+    expect(response.body[0]).toHaveProperty("date");
+    expect(response.body[0]).toHaveProperty("hour");
+    expect(response.body[0]).toHaveProperty("description");
+    expect(response.status).toBe(200);
+  });
+
+  test("GET /clubs/:id/meetings - Should not be able to list all club meetings with a wrong id", async () => {
+    const response = await request(app).get(`/clubs/${fakeId}/meetings`);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
+  });
 });
