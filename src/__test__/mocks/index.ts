@@ -106,3 +106,5 @@ export const mockedUpdatedUser: IUserRequest = {
   email: "email@email.com",
   password: "1234567",
 };
+
+
