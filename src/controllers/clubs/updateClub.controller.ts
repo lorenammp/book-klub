@@ -9,8 +9,7 @@ const updateClubController = async (req: Request, res: Response) => {
 
     const club = await UpdateClubService(id, name, description);
     
-    return res.status(200).send(club);
-    
+    return res.status(200).json(club);
   }  catch (error: any) {
     handleError(error, res);
   }
