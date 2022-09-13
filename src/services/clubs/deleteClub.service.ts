@@ -6,8 +6,8 @@ const deleteclubService = async(id: string):Promise<{message: string}>=> {
 
     const clubRepository = AppDataSource.getRepository(ClubsEntity)
 
-    const club = await clubRepository.findOneBy({id})    
-
+    const club = await clubRepository.findOneBy({id:id})    
+  
     if(!club){
         throw new AppError(404, "Club not found")
     }

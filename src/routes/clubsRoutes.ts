@@ -27,7 +27,6 @@ clubRouter.patch("/:id",AuthMiddlewares ,updateClubController);
 clubRouter.delete(
   "/:id",
   AuthMiddlewares,
-  admMiddlleware,
   deleteClubController
 );
 
