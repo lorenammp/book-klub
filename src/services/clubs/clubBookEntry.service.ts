@@ -9,33 +9,35 @@ const clubBookEntryService = async (clubId: string, bookId: string) => {
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
   const clubBookRepository = AppDataSource.getRepository(ClubBookEntity);
 
-  if(!clubId){
-    throw new AppError(401, "Club Id required!")
+  if (!clubId) {
+    throw new AppError(401, "Club Id required!");
   }
-  if(!bookId){
-    throw new AppError(401, "Book Id required!")
+  if (!bookId) {
+    throw new AppError(401, "Book Id required!");
   }
 
   const clubAlready = await clubRepository.findOne({
-    where: {id: clubId}
+    where: { id: clubId },
   });
   const bookAlready = await bookRepository.findOne({
-    where: {id: bookId}
-  })
+    where: { id: bookId },
+  });
 
   if (!bookAlready) {
-    throw new AppError(400, "Book not found");
+    throw new AppError(404, "Book not found");
   }
   if (!clubAlready) {
-    throw new AppError(400, "Club not found");
+    throw new AppError(404, "Club not found");
   }
 
   const clubBook = await clubBookRepository.find();
 
-  const clubBookAlready = clubBook.find(el=> el.book.id === bookId && el.club.id === clubId);
+  const clubBookAlready = clubBook.find(
+    (el) => el.book.id === bookId && el.club.id === clubId
+  );
 
-  if(clubBookAlready){
-    throw new AppError(400, "Book already registered in the club")
+  if (clubBookAlready) {
+    throw new AppError(400, "Book already registered in the club");
   }
 
   const newClubBook = clubBookRepository.create({

@@ -10,6 +10,10 @@ import {
   mockedSecondUserRegister,
   fakeId,
   mockedUpdatedUser,
+  mockedCategoryRegister,
+  mockedBookRegister,
+  mockedClubRegister,
+  mockedBook,
 } from "../mocks/index";
 import { IUser } from "../../interfaces/users";
 
@@ -62,7 +66,7 @@ describe("Testing the user routes", () => {
     expect(res.body).toHaveProperty("message");
   });
 
-  test("Shouldn't be able to login, missing password POST/users/login", async () => {
+  test("Shouldn't be able to Log In, missing password POST/users/login", async () => {
     const { email } = mockedWrongUserLogin;
     const res = await request(app).post("/users/login").send(email);
 
@@ -95,7 +99,7 @@ describe("Testing the user routes", () => {
     expect(res.body).toHaveProperty("isActive");
   });
 
-  test("Shouldn't be able to list an user, with a wrong id GET/users/:id", async () => {
+  test("Shouldn't be able to list an user, with a invalid ID GET/users/:id", async () => {
     const LoginUser = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
@@ -109,16 +113,97 @@ describe("Testing the user routes", () => {
     expect(res.body).toHaveProperty("message");
   });
 
-  test("Shouldn't be able to list an user, without token GET/users/:id", async () => {
+  test("Should be able to list user books GET/users/:id/book", async () => {
     const LoginUser = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
+
+    await request(app)
+      .post("/categories")
+      .send(mockedCategoryRegister)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    const resCategories = await request(app)
+      .get("/categories")
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    mockedBookRegister.categoryId = resCategories.body[0].id;
+
+    const resBook = await request(app)
+      .post("/books")
+      .send(mockedBookRegister)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    mockedBook.bookId = resBook.body.id;
+
+    const resClubs = await request(app)
+      .post("/clubs")
+      .send(mockedClubRegister)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    await request(app)
+      .post(`/clubs/${resClubs.body.id}/book`)
+      .send(mockedBook)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
     const Users = await request(app).get("/users");
 
-    const res = await request(app).get(`/users/${Users.body[0].id}`);
+    const res = await request(app).get(`/users/${Users.body[0].id}/book`);
+
+    expect(res.status).toBe(200);
+    expect(res.body[0]).toHaveProperty("b_id");
+    expect(res.body[0]).toHaveProperty("b_categoryId");
+    expect(res.body[0]).toHaveProperty("b_author");
+    expect(res.body[0]).toHaveProperty("b_name");
+  });
+
+  test("Shouldn't be able to list user books, with a invalid ID GET/users/:id/book", async () => {
+    const res = await request(app).get(`/users/${fakeId}/book`);
+
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Should be able to list user clubs GET/users/:id/clubs", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const res = await request(app)
+      .get(`/users/${LoginUser.body.id}/clubs`)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body[0]).toHaveProperty("club_id");
+    expect(res.body[0]).toHaveProperty("club_name");
+    expect(res.body[0]).toHaveProperty("club_description");
+    expect(res.body[0]).toHaveProperty("club_isActive");
+    expect(res.body[0]).toHaveProperty("club_created_At");
+    expect(res.body[0]).toHaveProperty("club_admId");
+  });
+
+  test("Shouldn't be able to list user clubs, without a token GET/users/:id/clubs", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const res = await request(app).get(`/users/${LoginUser.body.id}/clubs`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message");
+  });
+
+  test("Shouldn't be able to list user clubs, with a invalid ID GET/users/:id/clubs", async () => {
+    const LoginUser = await request(app)
+      .post("/users/login")
+      .send(mockedUserLogin);
+
+    const res = await request(app)
+      .get(`/users/${fakeId}/clubs`)
+      .set("Authorization", `Bearer ${LoginUser.body.token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(0);
   });
 
   test("Shouldn't be able to update an user, with an existent email PATCH/users/:id", async () => {
@@ -250,7 +335,7 @@ describe("Testing the user routes", () => {
     expect(res.body).toHaveProperty("message");
   });
 
-  test("Shouldn't be able to delete an user, without wrong id DELETE/users/:id", async () => {
+  test("Shouldn't be able to delete an user, with a invalid ID DELETE/users/:id", async () => {
     const LoginUser = await request(app)
       .post("/users/login")
       .send(mockedSecondUserRegister);

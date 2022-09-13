@@ -23,7 +23,7 @@ clubRouter.get("", clubsListController);
 clubRouter.get("/:id", clubListByIdController);
 clubRouter.get("/:id/meetings", clubsListMeetingsController);
 clubRouter.get("/:id/users", AuthMiddlewares, ClubUserListController);
-clubRouter.patch("/:id", updateClubController);
+clubRouter.patch("/:id",AuthMiddlewares ,updateClubController);
 clubRouter.delete(
   "/:id",
   AuthMiddlewares,
