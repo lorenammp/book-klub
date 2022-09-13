@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AppError, handleError } from "../../errors/appError";
+import { instanceToPlain } from "class-transformer";
 import deleteUserService from "../../services/users/deleteUser.service";
 
 const deleteUserController = async (req: Request, res: Response) => {

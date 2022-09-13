@@ -25,9 +25,7 @@ async function createUserService(userData: IUserRequest) {
 
   await userRepository.save(newUser);
 
-  const { password, ...user } = newUser;
-
-  return user;
+  return newUser;
 }
 
 export default createUserService;
