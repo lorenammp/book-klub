@@ -16,6 +16,7 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
     - [Utilizando o docker](#utilizando-o-docker)
     - [Utilizando um banco de dados local](#utilizando-um-banco-de-dados-local)
   - [Utilizando a API](#utilizando-a-api)
+  - [Executando testes](#executando-testes)
   - [Desenvolvedores](#desenvolvedores)
   - [Licença de uso](#licença-de-uso)
 
