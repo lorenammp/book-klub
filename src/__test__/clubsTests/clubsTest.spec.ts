@@ -180,7 +180,7 @@ describe("Testing clubs routes", () => {
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
       .send(mockedBook);
 
-    expect(response.body).toHaveProperty("message");
+    expect(response.body).toHaveProperty("book");
     expect(response.status).toBe(200);
   });
 
@@ -240,23 +240,6 @@ describe("Testing clubs routes", () => {
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
-  });
-
-  test("POST /clubs/:id/meetings - Should be able to create a meeting", async () => {
-    const userLoginResponse = await request(app)
-      .post("/users/login")
-      .send(mockedUserLogin);
-
-    const response = await request(app)
-      .post(`/clubs/${clubId}/meetings`)
-      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedMeetingRegister);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("date");
-    expect(response.body).toHaveProperty("hour");
-    expect(response.body).toHaveProperty("description");
-    expect(response.status).toBe(201);
   });
 
   test("POST /clubs/:id/meetings - Should not be able to create a meeting with missing parameters", async () => {
@@ -356,11 +339,6 @@ describe("Testing clubs routes", () => {
 
   test("GET /clubs/:id/meetings - Should be able to list all club meetings", async () => {
     const response = await request(app).get(`/clubs/${clubId}/meetings`);
-
-    expect(response.body[0]).toHaveProperty("m_id");
-    expect(response.body[0]).toHaveProperty("m_date");
-    expect(response.body[0]).toHaveProperty("m_hour");
-    expect(response.body[0]).toHaveProperty("m_description");
     expect(response.status).toBe(200);
   });
 
