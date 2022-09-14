@@ -1,5 +1,4 @@
 import AppDataSource from "../../data-source";
-import { v4 as uuidv4 } from "uuid";
 import { BooksEntity } from "../../entities/books.entity";
 import { CategoriesEntity } from "../../entities/categories.entity";
 import { AppError } from "../../errors/appError";
@@ -25,14 +24,13 @@ const createBooksService = async (data: IbookRequest) => {
   const category = categories.find((el) => el.id === data.categoryId);
 
   if (!category) {
-    throw new AppError(400, "Category not found");
+    throw new AppError(404, "Category not found");
   }
 
   const books = await booksRepository.find();
   const bookExists = books.some(
     (el) => el.name === data.name && el.author == data.author
   );
-
 
   if (bookExists) {
     throw new AppError(400, "Book already exists.");
