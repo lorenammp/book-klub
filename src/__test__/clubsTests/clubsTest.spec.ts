@@ -339,11 +339,6 @@ describe("Testing clubs routes", () => {
 
   test("GET /clubs/:id/meetings - Should be able to list all club meetings", async () => {
     const response = await request(app).get(`/clubs/${clubId}/meetings`);
-
-    expect(response.body[0]).toHaveProperty("m_id");
-    expect(response.body[0]).toHaveProperty("m_date");
-    expect(response.body[0]).toHaveProperty("m_hour");
-    expect(response.body[0]).toHaveProperty("m_description");
     expect(response.status).toBe(200);
   });
 
