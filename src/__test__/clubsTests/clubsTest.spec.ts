@@ -24,6 +24,7 @@ import {
 describe("Testing clubs routes", () => {
   let connection: DataSource;
   let clubId: string;
+  let secondClubId: string;
 
   beforeAll(async () => {
     await AppDataSource.initialize()
@@ -134,8 +135,11 @@ describe("Testing clubs routes", () => {
       .post("/clubs")
       .set("Authorization", `Bearer ${newClubUserResponse.body.token}`)
       .send(mockedSecondClubRegister);
+
+    secondClubId = club.body.id;
+
     const response = await request(app)
-      .post(`/clubs/${club.body.id}/entry`)
+      .post(`/clubs/${secondClubId}/entry`)
       .set("Authorization", `Bearer ${newClubUserResponse.body.token}`);
 
     expect(response.body).toHaveProperty("message");
@@ -280,30 +284,28 @@ describe("Testing clubs routes", () => {
       .send(mockedMeetingRegister);
 
     expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
   });
 
   test("GET /clubs/ - Should be able to list all clubs", async () => {
     const response = await request(app).get(`/clubs`);
 
-    expect(response.body[0]).toHaveProperty("id");
-    expect(response.body[0]).toHaveProperty("name");
-    expect(response.body[0]).toHaveProperty("description");
-    expect(response.body[0]).toHaveProperty("isActive");
-    expect(response.body[0]).toHaveProperty("created_At");
-    expect(response.body[0].isActive).toEqual(true);
+    expect(response.body[0]).toHaveProperty("club_id");
+    expect(response.body[0]).toHaveProperty("club_name");
+    expect(response.body[0]).toHaveProperty("club_description");
+    expect(response.body[0]).toHaveProperty("club_isActive");
+    expect(response.body[0]).toHaveProperty("club_created_At");
     expect(response.status).toBe(200);
   });
 
   test("GET /clubs/:id - Should be able to list a single club by it's id", async () => {
     const response = await request(app).get(`/clubs/${clubId}`);
 
-    expect(response.body).toHaveProperty("name");
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("isActive");
-    expect(response.body).toHaveProperty("created_At");
-    expect(response.body.isActive).toEqual(true);
+    expect(response.body).toHaveProperty("club_name");
+    expect(response.body).toHaveProperty("club_id");
+    expect(response.body).toHaveProperty("club_description");
+    expect(response.body).toHaveProperty("club_isActive");
+    expect(response.body).toHaveProperty("club_created_At");
     expect(response.status).toBe(200);
   });
 
@@ -355,10 +357,10 @@ describe("Testing clubs routes", () => {
   test("GET /clubs/:id/meetings - Should be able to list all club meetings", async () => {
     const response = await request(app).get(`/clubs/${clubId}/meetings`);
 
-    expect(response.body[0]).toHaveProperty("id");
-    expect(response.body[0]).toHaveProperty("date");
-    expect(response.body[0]).toHaveProperty("hour");
-    expect(response.body[0]).toHaveProperty("description");
+    expect(response.body[0]).toHaveProperty("m_id");
+    expect(response.body[0]).toHaveProperty("m_date");
+    expect(response.body[0]).toHaveProperty("m_hour");
+    expect(response.body[0]).toHaveProperty("m_description");
     expect(response.status).toBe(200);
   });
 
@@ -369,7 +371,7 @@ describe("Testing clubs routes", () => {
     expect(response.status).toBe(404);
   });
 
-  test("PATCH/clubs/:id, shouldn't be able to update, without a token", async () => {
+  test("PATCH/clubs/:id, Should be able to update, without a token", async () => {
     const clubs = await request(app).get("/clubs");
 
     clubId = clubs.body.id;
@@ -382,7 +384,7 @@ describe("Testing clubs routes", () => {
     expect(res.body).toHaveProperty("message");
   });
 
-  test("PATCH/clubs/:id, Shouldn't be able to update, with a invalid id", async () => {
+  test("PATCH/clubs/:id, Should not be able to update, with a invalid id", async () => {
     const responseToken = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
@@ -401,26 +403,24 @@ describe("Testing clubs routes", () => {
   test("PATCH/clubs/:id, Should be possible to update club", async () => {
     const responseToken = await request(app)
       .post("/users/login")
-      .send(mockedUserLogin);
-    await request(app).post("/clubs").send(mockedClubRegister);
-    const response = await request(app).get("/clubs");
+      .send(mockedSecondUserLogin);
+
+    const clubPatch = {
+      name: "New patched club",
+    };
 
     const responsePatch = await request(app)
-      .patch(`/clubs/${response.body[0].id}`)
-      .send(mockedClubRegister)
+      .patch(`/clubs/${secondClubId}`)
+      .send(clubPatch)
       .set("Authorization", `Bearer ${responseToken.body.token}`);
 
     expect(responsePatch.status).toBe(200);
-    expect(responsePatch.body).toHaveProperty("id");
-    expect(responsePatch.body).toHaveProperty("name");
-    expect(responsePatch.body).toHaveProperty("description");
+    expect(responsePatch.body).toHaveProperty("club_id");
+    expect(responsePatch.body).toHaveProperty("club_name");
+    expect(responsePatch.body).toHaveProperty("club_description");
   });
 
-  test("DELETE/clubs/:id, Shouldn't be able to delete an club, without token.", async () => {
-    const LoginUser = await request(app)
-      .post("/users/login")
-      .send(mockedSecondUserRegister);
-
+  test("DELETE/clubs/:id, Should not be able to delete a club, without token", async () => {
     const clubs = await request(app).get("/clubs/");
 
     const res = await request(app).delete(`/clubs/${clubs.body[0].id}`);
@@ -429,7 +429,7 @@ describe("Testing clubs routes", () => {
     expect(res.body).toHaveProperty("message");
   });
 
-  test("DELETE/clubs/:id, should not be possible to delete a club with the wrong id.", async () => {
+  test("DELETE/clubs/:id, Should not be possible to delete a club with the wrong id", async () => {
     const LoginUser = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
@@ -442,13 +442,13 @@ describe("Testing clubs routes", () => {
     expect(res.body).toHaveProperty("message");
   });
 
-  test("DELETE/clubs/:id, Should be able to delete an club.", async () => {
+  test("DELETE/clubs/:id, Should be able to delete a club", async () => {
     const LoginUser = await request(app)
       .post("/users/login")
-      .send(mockedUserLogin);
-    const clubs = await request(app).get("/clubs");
+      .send(mockedSecondUserLogin);
+
     const res = await request(app)
-      .delete(`/clubs/${clubs.body[0].id}`)
+      .delete(`/clubs/${secondClubId}`)
       .set("Authorization", `Bearer ${LoginUser.body.token}`);
 
     expect(res.status).toBe(204);
