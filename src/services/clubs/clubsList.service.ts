@@ -17,7 +17,6 @@ const clubsListService = async () => {
     .select("club")
     .from(UsersClubsEntity, "usc")
     .innerJoin(ClubsEntity, "club", 'club."id" = usc."clubId"')
-    .where('club."isActive" = :bool', { bool: true })
     .groupBy("club.id")
     .getRawMany();
 
