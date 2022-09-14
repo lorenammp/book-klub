@@ -16,6 +16,7 @@ Todos os usuários cadastrados podem criar e administrar seus próprios clubes, 
     - [Utilizando o docker](#utilizando-o-docker)
     - [Utilizando um banco de dados local](#utilizando-um-banco-de-dados-local)
   - [Utilizando a API](#utilizando-a-api)
+  - [Executando testes](#executando-testes)
   - [Desenvolvedores](#desenvolvedores)
   - [Licença de uso](#licença-de-uso)
 
@@ -52,13 +53,13 @@ yarn install
 
 ### Utilizando o docker
 
-Após o comando `yarn instal`, execute o comando abaixo para executar a aplicação utilizando um container docker - é necessário ter o Docker Desktop instalado no Windows e Mac, ou Docker Compose no Linux.
+Após o comando `yarn install`, utilize o comando abaixo para executar a aplicação utilizando um container docker - é necessário ter o Docker Desktop instalado no Windows e Mac, ou Docker Compose no Linux.
 
 ```
 docker-compose --build
 ```
 
-Em seguida, para executar a imagem, execute o seguinte comando:
+Em seguida, para executar a imagem, utilize o seguinte comando:
 
 ```
 docker-compose up
@@ -90,7 +91,11 @@ SECRET_KEY=123456
 DATABASE_URL="postgres://admin:1234@localhost:5432/bookklub"
 ```
 
-Em seguida, altere o nome do arquivo de `.env.example` para `.env`.
+Em seguida, altere o nome do arquivo de `.env.example` para `.env`. Para executar a aplicação, utilize o comando:
+
+```
+yarn dev
+```
 
 ## Utilizando a API
 
@@ -98,37 +103,45 @@ Para utilizar a API `Book Klub`, acesse a [documentação do projeto](https://in
 
 Na documentação você poderá encontrar todos os endpoints da aplicação e mais sobre como utilizar a API em seus próprios projetos e aplicações.
 
+## Executando testes
+
+Foram desenvolvidos diversos testes de integração utilizando `Jest` para a aplicação. Para executar todos os testes, utilize o comando:
+
+```
+yarn test
+```
+
+Caso queira executar apenas os testes de uma rota específica, basta utilizar o mesmo comando acima, seguido do nome da rota, como no exemplo abaixo:
+
+```
+yarn test "/users"
+```
+
 ## Desenvolvedores
 
 #### **Carlos**
 
-- Github
-- Linkedin
+- [Github](https://github.com/chrds1)
 
 #### **Clara**
 
-- Github
-- Linkedin
+- [Github](https://github.com/Clara-Carvalho)
 
 #### **Gabriela**
 
-- Github
-- Linkedin
+- [Github](https://github.com/Gabriela-LC)
 
 #### **Jamilly**
 
-- Github
-- Linkedin
+- [Github](https://github.com/jamilylima)
 
 #### **Leo**
 
-- Github
-- Linkedin
+- [Github](https://github.com/Leeo-Henrique)
 
 #### **Lorena**
 
-- Github
-- Linkedin
+- [Github](https://github.com/lorenammp)
 
 ## Licença de uso
 
