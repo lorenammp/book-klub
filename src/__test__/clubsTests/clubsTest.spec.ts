@@ -371,7 +371,7 @@ describe("Testing clubs routes", () => {
     expect(response.status).toBe(404);
   });
 
-  test("PATCH/clubs/:id, Should be able to update, without a token", async () => {
+  test("PATCH/clubs/:id, Should not be able to update, without a token", async () => {
     const clubs = await request(app).get("/clubs");
 
     clubId = clubs.body.id;
