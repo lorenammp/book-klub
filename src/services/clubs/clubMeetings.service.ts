@@ -16,6 +16,13 @@ const clubMeetingsService = async (
   const meetingsRepository = AppDataSource.getRepository(MeetingsEntity);
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
 
+  if (!date || !hour || !description) {
+    throw new AppError(
+      401,
+      "Missing properties, date, hour and description must be sent."
+    );
+  }
+
   const clubFind = await clubRepository.find();
   const clubIdd = clubFind.find((club) => club.id === clubId);
 

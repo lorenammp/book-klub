@@ -1,16 +1,20 @@
 import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/appError";
-import { IUser, IUserRequest } from "../../interfaces/users";
+import { IUser, IUserAdmRequest } from "../../interfaces/users";
 
 import { hash } from "bcryptjs";
 import { UsersEntity } from "../../entities/users.entity";
 
-async function createUserService(userData: IUserRequest) {
+async function createUserAdmService(userData: IUserAdmRequest) {
   const userRepository = AppDataSource.getRepository(UsersEntity);
 
   const emailAlreadyExists = await userRepository.findOneBy({
     email: userData.email,
   });
+
+  if (!userData.isAdm) {
+    throw new AppError(401, "Must have isAdm property equals true");
+  }
 
   if (emailAlreadyExists) {
     throw new AppError(400, "Email already in use");
@@ -28,4 +32,4 @@ async function createUserService(userData: IUserRequest) {
   return newUser;
 }
 
-export default createUserService;
+export default createUserAdmService;

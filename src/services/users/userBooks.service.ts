@@ -13,7 +13,7 @@ const booksUserService = async (id: string) => {
   const userAlready = await userRepository.findOneBy({ id: id });
 
   if (!userAlready) {
-    throw new AppError(400, "User not found");
+    throw new AppError(404, "User not found");
   }
 
   const books = await bookRepository

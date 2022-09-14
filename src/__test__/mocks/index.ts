@@ -2,13 +2,25 @@ import { IUserLogin, IUserRequest } from "../../interfaces/users";
 
 export const fakeId = "9be1d4fe-df85-4fde-bf89-19ef2d37bbb5";
 
-export const mockedUserRegister = {
-  name: "User",
-  email: "user@mail.com",
+export const mockedAdmUserLogin: IUserLogin = {
+  email: "admin@mail.com",
+  password: "123456",
+};
+
+export const mockedAdmUserRegister = {
+  name: "Admin",
+  email: "admin@mail.com",
+  isAdm: true,
   password: "123456",
 };
 
 export const mockedUserLogin: IUserLogin = {
+  email: "user@mail.com",
+  password: "123456",
+};
+
+export const mockedUserRegister = {
+  name: "User",
   email: "user@mail.com",
   password: "123456",
 };
@@ -106,5 +118,3 @@ export const mockedUpdatedUser: IUserRequest = {
   email: "email@email.com",
   password: "1234567",
 };
-
-

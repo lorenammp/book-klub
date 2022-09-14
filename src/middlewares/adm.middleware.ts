@@ -9,7 +9,9 @@ const admMiddlleware = async (
 
   if (adm === false) {
     return res.status(401).send({
-      message: "Permission denied",
+      staus: "error",
+      statusCode: 401,
+      message: "Only the app admin can perform this action",
     });
   }
   next();
