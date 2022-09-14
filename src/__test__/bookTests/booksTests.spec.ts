@@ -3,11 +3,15 @@ import { DataSource } from "typeorm";
 import app from "../../app";
 import AppDataSource from "../../data-source";
 import {
+  fakeId,
+  mockedAdmUserLogin,
+  mockedAdmUserRegister,
   mockedBookRegister,
   mockedCategoryRegister,
   mockedSecondBookRegister,
   mockedUserLogin,
   mockedUserRegister,
+  mockedWrongBook,
 } from "../mocks";
 
 describe("Testing books routes", () => {
@@ -24,6 +28,7 @@ describe("Testing books routes", () => {
       });
 
     await request(app).post("/users").send(mockedUserRegister);
+    await request(app).post("/users/adm").send(mockedAdmUserRegister);
   });
 
   afterAll(async () => {
@@ -47,6 +52,8 @@ describe("Testing books routes", () => {
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
       .send(mockedBookRegister);
 
+    bookId = response.body.id;
+
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("name");
     expect(response.body).toHaveProperty("author");
@@ -59,13 +66,6 @@ describe("Testing books routes", () => {
       .post("/users/login")
       .send(mockedUserLogin);
 
-    const createCategory = await request(app)
-      .post("/categories")
-      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedCategoryRegister);
-
-    mockedBookRegister.categoryId = createCategory.body.id;
-
     const response = await request(app)
       .post("/books")
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
@@ -76,12 +76,6 @@ describe("Testing books routes", () => {
   });
 
   test("POST /books - Shold not be able to create a book without authentication", async () => {
-    const createCategory = await request(app)
-      .post("/categories")
-      .send(mockedCategoryRegister);
-
-    mockedBookRegister.categoryId = createCategory.body.id;
-
     const response = await request(app).post("/books").send(mockedBookRegister);
 
     expect(response.body).toHaveProperty("message");
@@ -89,14 +83,6 @@ describe("Testing books routes", () => {
   });
 
   test("POST /books - Shold not be able to create a book with missing properties", async () => {
-    const createCategory = await request(app)
-      .post("/categories")
-      .send(mockedCategoryRegister);
-
-    mockedBookRegister.categoryId = createCategory.body.id;
-    mockedBookRegister.name = "";
-    mockedBookRegister.author = "";
-
     const userLoginResponse = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
@@ -104,7 +90,7 @@ describe("Testing books routes", () => {
     const response = await request(app)
       .post("/books")
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedBookRegister);
+      .send(mockedWrongBook);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
@@ -134,24 +120,10 @@ describe("Testing books routes", () => {
   test("DELETE /books/:id - Shold be able to delete a book", async () => {
     const userLoginResponse = await request(app)
       .post("/users/login")
-      .send(mockedUserLogin);
-
-    const createCategory = await request(app)
-      .post("/categories")
-      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedCategoryRegister);
-
-    mockedBookRegister.categoryId = createCategory.body.id;
-
-    const createBook = await request(app)
-      .post("/books")
-      .set("Authorization", `Bearer ${userLoginResponse.body.token}`)
-      .send(mockedBookRegister);
-
-    const books = await request(app).get("/books");
+      .send(mockedAdmUserLogin);
 
     const response = await request(app)
-      .delete(`/books/${books.body[0].id}`)
+      .delete(`/books/${bookId}`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
 
     expect(response.status).toBe(204);
@@ -176,11 +148,10 @@ describe("Testing books routes", () => {
 
     const response = await request(app).delete(`/books/${createBook.body.id}`);
 
-    expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
   });
 
-  test("DELETE /books/:id - Shold not be able to delete a book that doesn't exist", async () => {
+  test("DELETE /books/:id - Shold not be able a book that doesn't exist", async () => {
     const userLoginResponse = await request(app)
       .post("/users/login")
       .send(mockedUserLogin);
@@ -189,7 +160,6 @@ describe("Testing books routes", () => {
       .delete(`/books/66047662-dfa2-4f45-a557-88bc2b9ed294`)
       .set("Authorization", `Bearer ${userLoginResponse.body.token}`);
 
-    expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(401);
   });
 });
