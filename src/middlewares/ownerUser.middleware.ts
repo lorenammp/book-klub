@@ -10,8 +10,9 @@ const OwnerMiddleware = async (
 
   if (id !== idUser) {
     return res.status(403).json({
-      error: "Error",
-      message: "Not a owner",
+      staus: "error",
+      statusCode: 403,
+      message: "Not an owner",
     });
   }
 

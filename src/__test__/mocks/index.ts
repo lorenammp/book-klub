@@ -2,13 +2,25 @@ import { IUserLogin, IUserRequest } from "../../interfaces/users";
 
 export const fakeId = "9be1d4fe-df85-4fde-bf89-19ef2d37bbb5";
 
-export const mockedUserRegister = {
-  name: "User",
-  email: "user@mail.com",
+export const mockedAdmUserLogin: IUserLogin = {
+  email: "admin@mail.com",
+  password: "123456",
+};
+
+export const mockedAdmUserRegister = {
+  name: "Admin",
+  email: "admin@mail.com",
+  isAdm: true,
   password: "123456",
 };
 
 export const mockedUserLogin: IUserLogin = {
+  email: "user@mail.com",
+  password: "123456",
+};
+
+export const mockedUserRegister = {
+  name: "User",
   email: "user@mail.com",
   password: "123456",
 };
@@ -50,6 +62,18 @@ export const mockedWrongCategoryRegister = {
   category: "Drama",
 };
 
+export const mockedBook = {
+  bookId: "",
+};
+
+export const mockedSecondBook = {
+  bookId: "",
+};
+
+export const mockedWrongBook = {
+  id: "",
+};
+
 export const mockedBookRegister = {
   name: "Stranger in a Strange Land",
   author: "Robert A. Heinlein",
@@ -65,6 +89,23 @@ export const mockedSecondBookRegister = {
 export const mockedWrongBookRegister = {
   name: "To Kill a Mockingbird",
   author: "Harper Lee",
+};
+
+export const mockedMeetingRegister = {
+  description: "Meeting",
+  date: "16/08/2022",
+  hour: "09:00",
+};
+
+export const mockedSecondMeetingRegister = {
+  description: "Second Meeting",
+  date: "18/08/2022",
+  hour: "14:00",
+};
+
+export const mockedWrongMeetingRegister = {
+  description: "Meeting",
+  date: "16/08/2022",
 };
 
 export const mockedWrongUserLogin: IUserLogin = {

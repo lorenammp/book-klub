@@ -14,12 +14,13 @@ export const handleError = (error: AppError, res: Response) => {
   if (error instanceof AppError) {
     return res.status(error.statusCode).json({
       status: "error",
+      statusCode: error.statusCode,
       message: error.message,
     });
   }
 
   return res.status(500).json({
     status: "error",
-    message: "Internal server error",
+    message: (error as any).message,
   });
 };
