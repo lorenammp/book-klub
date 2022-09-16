@@ -14,6 +14,12 @@ export class BooksEntity {
   @Column({ length: 50 })
   author: string;
 
+  @Column()
+  description: string;
+
+  @Column()
+  cover: string;
+
   @ManyToOne(
     () => CategoriesEntity,
     (CategoriesEntity) => CategoriesEntity.books,

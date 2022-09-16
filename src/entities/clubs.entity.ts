@@ -9,6 +9,7 @@ import {
 import { v4 as uuid } from "uuid";
 import { ClubBookEntity } from "./club_book.entity";
 import { MeetingsEntity } from "./meetings.entity";
+import { ThreadEntity } from "./thread.entity";
 import { UsersEntity } from "./users.entity";
 import { UsersClubsEntity } from "./user_club.entity";
 
@@ -23,6 +24,9 @@ export class ClubsEntity {
   @Column({ length: 300 })
   description: string;
 
+  @Column()
+  cover: string;
+
   @Column({ default: true })
   isActive: boolean;
 
@@ -36,6 +40,9 @@ export class ClubsEntity {
 
   @OneToMany((type) => UsersClubsEntity, (user_clubs) => user_clubs.club)
   user_clubs: UsersClubsEntity;
+
+  @OneToMany((type) => ThreadEntity, (thread) => thread.club)
+  thread: ThreadEntity[];
 
   @OneToMany((type) => ClubBookEntity, (book) => book.club)
   book: ClubBookEntity[];
