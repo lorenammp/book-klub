@@ -39,6 +39,7 @@ const createBooksService = async (data: IbookRequest) => {
   const newBook = booksRepository.create({
     name: data.name,
     author: data.author,
+    cover: data.cover,
     category: category,
   });
 

@@ -2,6 +2,7 @@ export interface IUserRequest {
   name: string;
   email: string;
   password: string;
+  avatar: string;
 }
 
 export interface IUserAdmRequest {
@@ -9,12 +10,14 @@ export interface IUserAdmRequest {
   email: string;
   isAdm: boolean;
   password: string;
+  avatar: string;
 }
 
 export interface IUser {
   name: string;
   email: string;
   password: string;
+  avatar: string;
   isAdm: boolean;
   isActive: boolean;
 }

@@ -13,6 +13,9 @@ import clubsListMeetingsController from "../controllers/clubs/clubsListMeetings.
 import ClubMeetingController from "../controllers/clubs/clubMeetings.controller";
 import exitClubController from "../controllers/clubs/exitClub.controller";
 import clubAdmMiddlleware from "../middlewares/clubAdm.middleware";
+import ClubCreateThreadController from "../controllers/clubs/clubCreateThread.controller";
+import ClubMemberMiddleware from "../middlewares/clubMember.middleware";
+import ClubListThreadsController from "../controllers/clubs/clubListThreads.controller";
 
 const clubRouter = Router();
 
@@ -30,16 +33,26 @@ clubRouter.post(
   clubAdmMiddlleware,
   clubBookEntryController
 );
+clubRouter.post(
+  "/:id/thread",
+  AuthMiddlewares,
+  ClubMemberMiddleware,
+  ClubCreateThreadController
+);
+
 clubRouter.get("", clubsListController);
 clubRouter.get("/:id", clubListByIdController);
 clubRouter.get("/:id/meetings", clubsListMeetingsController);
 clubRouter.get("/:id/users", AuthMiddlewares, ClubUserListController);
+clubRouter.get("/:id/thread", AuthMiddlewares, ClubListThreadsController);
+
 clubRouter.patch(
   "/:id",
   AuthMiddlewares,
   clubAdmMiddlleware,
   updateClubController
 );
+
 clubRouter.delete(
   "/:id",
   AuthMiddlewares,

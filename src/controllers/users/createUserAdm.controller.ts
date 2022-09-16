@@ -5,8 +5,14 @@ import createUserAdmService from "../../services/users/createUserAdm.service";
 
 const createUserAdmController = async (req: Request, res: Response) => {
   try {
-    const { name, email, isAdm, password } = req.body;
-    const user = await createUserAdmService({ name, email, isAdm, password });
+    const { name, email, isAdm, password, avatar } = req.body;
+    const user = await createUserAdmService({
+      name,
+      email,
+      isAdm,
+      password,
+      avatar,
+    });
 
     return res.status(201).json(instanceToPlain(user));
   } catch (error: any) {
