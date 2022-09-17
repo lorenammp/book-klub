@@ -9,11 +9,12 @@ const createClubService = async ({
   name,
   description,
   admId,
+  cover,
 }: IClubRequest) => {
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
   const userRepository = AppDataSource.getRepository(UsersEntity);
 
-  if(!name || !description || !admId){
+  if (!name || !description || !admId) {
     throw new AppError(400, "All parameters required");
   }
 
@@ -36,6 +37,7 @@ const createClubService = async ({
   const newClub = clubRepository.create({
     name,
     description,
+    cover,
     adm: clubAdm,
   });
 

@@ -5,8 +5,8 @@ import { instanceToPlain } from "class-transformer";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
-    const user = await createUserService({ name, email, password });
+    const { name, email, password, avatar } = req.body;
+    const user = await createUserService({ name, email, password, avatar });
 
     return res.status(201).json(instanceToPlain(user));
   } catch (error: any) {

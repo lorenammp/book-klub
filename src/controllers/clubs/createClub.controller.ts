@@ -4,13 +4,18 @@ import { Request, Response } from "express";
 
 const createClubController = async (req: Request, res: Response) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, cover } = req.body;
     const admId = req.body.id;
 
-    const response = await createClubService({ name, description, admId });
+    const response = await createClubService({
+      name,
+      description,
+      cover,
+      admId,
+    });
 
     return res.status(201).json(response);
-  }  catch (error: any) {
+  } catch (error: any) {
     handleError(error, res);
   }
 };

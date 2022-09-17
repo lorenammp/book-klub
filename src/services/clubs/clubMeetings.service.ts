@@ -11,7 +11,8 @@ const clubMeetingsService = async (
   clubId: string,
   date: string,
   hour: string,
-  description: string
+  description: string,
+  link: string
 ) => {
   const meetingsRepository = AppDataSource.getRepository(MeetingsEntity);
   const clubRepository = AppDataSource.getRepository(ClubsEntity);
@@ -35,6 +36,7 @@ const clubMeetingsService = async (
     date,
     hour,
     description,
+    link,
   });
 
   await meetingsRepository.save(newMeeting);

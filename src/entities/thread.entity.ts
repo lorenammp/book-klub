@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
 import { ClubsEntity } from "./clubs.entity";
 import { PostEntity } from "./post.entity";
@@ -9,7 +16,9 @@ export class ThreadEntity {
   @PrimaryColumn("uuid")
   readonly id: string;
 
-  @ManyToOne(() => ClubsEntity, (club) => club.thread)
+  @ManyToOne(() => ClubsEntity, (club) => club.thread, {
+    eager: true,
+  })
   club: ClubsEntity;
 
   @ManyToOne(() => UsersEntity, (user) => user.thread, {
@@ -23,10 +32,10 @@ export class ThreadEntity {
   @Column()
   text: string;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @CreateDateColumn()
   updatedAt: Date;
 
   @OneToMany((type) => PostEntity, (post) => post.thread)
