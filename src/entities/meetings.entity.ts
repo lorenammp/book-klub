@@ -21,6 +21,9 @@ export class MeetingsEntity {
   @Column({ length: 300 })
   description: string;
 
+  @Column()
+  link: string;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();

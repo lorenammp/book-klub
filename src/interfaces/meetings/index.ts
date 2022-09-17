@@ -3,4 +3,5 @@ export interface IMeetingRequest {
   date: string;
   hour: string;
   description: string;
+  link: string;
 }
